@@ -1,0 +1,24 @@
+{
+  "name": "lightvet2clientside",
+  "version": "1.0.0",
+  "description": "Vet Daily rutine app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "LightVet2ClientSide"
+  },
+  "author": "Roni Freudenthal",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "jquery": "^3.2.1",
+    "mustache": "^2.3.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-env": "^1.6.0"
+  }
+}

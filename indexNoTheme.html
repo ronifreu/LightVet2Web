@@ -1,0 +1,40 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+        <script src="node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="node_modules/mustache/mustache.min.js"></script>
+    </head>
+    <body>
+        <!--[if lt IE 8]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        <script src="js/main.js"></script>
+
+
+        <!-- Add your site or application content here -->
+        <h1>Light Vet</h1>
+
+        <div id="owners_list">
+            <button>Get Owners</button>
+            <p class='owners'> </p>
+        </div>
+
+        <div id="search_owner">
+            <h2>Search Owner</h2>
+            <div>
+                Search string: <input type="text" id="search_field"><br>
+                <input type="checkbox" id="cb_phone_number"> Phone number
+                <input type="checkbox" id="cb_first_name"> First name
+                <input type="checkbox" id="cb_last_name"> Last name
+                <input type="checkbox" id="cb_chip"> Chip id
+            </div>
+            <p class='owners_search_p'> </p>
+            <div id="owners_search_res_block">
+                <ul id="owners_search_res_list">
+
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>
