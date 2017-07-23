@@ -1698,6 +1698,10 @@
 		letter-spacing: -0.035em;
 	}
 
+	.smalltitle{
+		font-size: 2.00em;
+	}
+
 		h1 a {
 			color: inherit;
 		}
@@ -1723,7 +1727,7 @@
 		font-weight: 900;
 		line-height: 1.5;
 		margin: 0 0 2em 0;
-		text-transform: uppercase;
+		/*text-transform: uppercase;*/
 		letter-spacing: 0.35em;
 	}
 

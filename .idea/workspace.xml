@@ -15,8 +15,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="447">
-              <caret line="71" column="24" lean-forward="true" selection-start-line="71" selection-start-column="24" selection-end-line="96" selection-end-column="38" />
+            <state relative-caret-position="311">
+              <caret line="63" column="34" lean-forward="true" selection-start-line="63" selection-start-column="34" selection-end-line="63" selection-end-column="34" />
               <folding>
                 <element signature="e#3178#3184#0" expanded="true" />
               </folding>
@@ -27,8 +27,8 @@
       <file leaf-file-name="ownerPage.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/ownerPage.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="753">
-              <caret line="110" column="36" lean-forward="false" selection-start-line="110" selection-start-column="36" selection-end-line="110" selection-end-column="36" />
+            <state relative-caret-position="651">
+              <caret line="98" column="17" lean-forward="true" selection-start-line="65" selection-start-column="8" selection-end-line="98" selection-end-column="17" />
               <folding>
                 <element signature="e#2615#2621#0" expanded="true" />
               </folding>
@@ -36,11 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="petPage.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/petPage.html">
+      <file leaf-file-name="elements.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/elements.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="54" column="35" lean-forward="false" selection-start-line="54" selection-start-column="24" selection-end-line="54" selection-end-column="35" />
+            <state relative-caret-position="166">
+              <caret line="292" column="64" lean-forward="true" selection-start-line="292" selection-start-column="45" selection-end-line="292" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -49,8 +49,8 @@
       <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/js/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="731">
-              <caret line="58" column="8" lean-forward="true" selection-start-line="58" selection-start-column="8" selection-end-line="61" selection-end-column="10" />
+            <state relative-caret-position="-146">
+              <caret line="22" column="6" lean-forward="true" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
               <folding />
             </state>
           </provider>
@@ -59,8 +59,8 @@
       <file leaf-file-name="ownerPage.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/js/ownerPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="23" selection-end-column="5" />
+            <state relative-caret-position="418">
+              <caret line="70" column="0" lean-forward="false" selection-start-line="70" selection-start-column="0" selection-end-line="95" selection-end-column="1" />
               <folding />
             </state>
           </provider>
@@ -69,8 +69,32 @@
       <file leaf-file-name="petPage.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/assets/js/petPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" column="84" lean-forward="false" selection-start-line="24" selection-start-column="84" selection-end-line="24" selection-end-column="84" />
+            <state relative-caret-position="612">
+              <caret line="93" column="79" lean-forward="false" selection-start-line="93" selection-start-column="79" selection-end-line="93" selection-end-column="79" />
+              <folding>
+                <marker date="1500841869837" expanded="true" signature="1926:1939" ph="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="petPage.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/petPage.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="549">
+              <caret line="89" column="111" lean-forward="false" selection-start-line="89" selection-start-column="111" selection-end-line="89" selection-end-column="111" />
+              <folding>
+                <element signature="e#3259#3265#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/assets/css/main.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="293">
+              <caret line="3157" column="20" lean-forward="false" selection-start-line="3157" selection-start-column="20" selection-end-line="3157" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -89,6 +113,18 @@
     <findStrings>
       <find>1111</find>
       <find>phoneNumber</find>
+      <find>position: abs</find>
+      <find>tr</find>
+      <find>left</find>
+      <find>image</find>
+      <find>table</find>
+      <find>h1</find>
+      <find>text-transform: uppercase</find>
+      <find>fa-download</find>
+      <find>Buttons</find>
+      <find>fa</find>
+      <find>fa-upload</find>
+      <find>fa-</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -98,10 +134,11 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/assets/js/main.js" />
-        <option value="$PROJECT_DIR$/assets/js/app.js" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/ownerPage.html" />
+        <option value="$PROJECT_DIR$/assets/js/app.js" />
         <option value="$PROJECT_DIR$/assets/js/ownerPage.js" />
+        <option value="$PROJECT_DIR$/assets/css/main.css" />
         <option value="$PROJECT_DIR$/petPage.html" />
         <option value="$PROJECT_DIR$/assets/js/petPage.js" />
       </list>
@@ -182,6 +219,24 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LightVet2Web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="LightVet2Web" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="css" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -293,12 +348,12 @@
       <updated>1500312824672</updated>
       <workItem from="1500312825904" duration="269000" />
       <workItem from="1500371009783" duration="18801000" />
-      <workItem from="1500482627225" duration="18702000" />
+      <workItem from="1500482627225" duration="37420000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="37772000" />
+    <option name="totallyTimeSpent" value="56490000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="54" y="-8" width="1874" height="1096" extended-state="6" />
@@ -412,14 +467,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/elements.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/indexNoTheme.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -428,9 +475,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-146">
+          <caret line="22" column="6" lean-forward="true" selection-start-line="22" selection-start-column="6" selection-end-line="22" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/generic.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1700">
+        <state relative-caret-position="925">
           <caret line="100" column="0" lean-forward="true" selection-start-line="100" selection-start-column="0" selection-end-line="100" selection-end-column="0" />
           <folding />
         </state>
@@ -438,53 +493,73 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="447">
-          <caret line="71" column="24" lean-forward="true" selection-start-line="71" selection-start-column="24" selection-end-line="96" selection-end-column="38" />
+        <state relative-caret-position="311">
+          <caret line="63" column="34" lean-forward="true" selection-start-line="63" selection-start-column="34" selection-end-line="63" selection-end-column="34" />
           <folding>
             <element signature="e#3178#3184#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/font-awesome.min.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="3" column="8401" lean-forward="false" selection-start-line="3" selection-start-column="8392" selection-end-line="3" selection-end-column="8401" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/ownerPage.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="753">
-          <caret line="110" column="36" lean-forward="false" selection-start-line="110" selection-start-column="36" selection-end-line="110" selection-end-column="36" />
+        <state relative-caret-position="651">
+          <caret line="98" column="17" lean-forward="true" selection-start-line="65" selection-start-column="8" selection-end-line="98" selection-end-column="17" />
           <folding>
             <element signature="e#2615#2621#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/app.js">
+    <entry file="file://$PROJECT_DIR$/elements.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="58" column="8" lean-forward="true" selection-start-line="58" selection-start-column="8" selection-end-line="61" selection-end-column="10" />
+        <state relative-caret-position="166">
+          <caret line="292" column="64" lean-forward="true" selection-start-line="292" selection-start-column="45" selection-end-line="292" selection-end-column="64" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/js/ownerPage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="21" column="0" lean-forward="false" selection-start-line="21" selection-start-column="0" selection-end-line="23" selection-end-column="5" />
+        <state relative-caret-position="418">
+          <caret line="70" column="0" lean-forward="false" selection-start-line="70" selection-start-column="0" selection-end-line="95" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/css/main.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="293">
+          <caret line="3157" column="20" lean-forward="false" selection-start-line="3157" selection-start-column="20" selection-end-line="3157" selection-end-column="20" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/petPage.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="54" column="35" lean-forward="false" selection-start-line="54" selection-start-column="24" selection-end-line="54" selection-end-column="35" />
-          <folding />
+        <state relative-caret-position="549">
+          <caret line="89" column="111" lean-forward="false" selection-start-line="89" selection-start-column="111" selection-end-line="89" selection-end-column="111" />
+          <folding>
+            <element signature="e#3259#3265#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/js/petPage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="84" lean-forward="false" selection-start-line="24" selection-start-column="84" selection-end-line="24" selection-end-column="84" />
-          <folding />
+        <state relative-caret-position="612">
+          <caret line="93" column="79" lean-forward="false" selection-start-line="93" selection-start-column="79" selection-end-line="93" selection-end-column="79" />
+          <folding>
+            <marker date="1500841869837" expanded="true" signature="1926:1939" ph="..." />
+          </folding>
         </state>
       </provider>
     </entry>

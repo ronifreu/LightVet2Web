@@ -3,6 +3,7 @@ var serverAddress = 'http://localhost:51714'
 $(document).ready(function() {
     ownerInfo.init();
     petsInfo.init();
+    addPet.init();
 });
 
 var ownerInfo = {
@@ -64,6 +65,33 @@ var petsInfo = {
             console.log($(this).data("pet_identifier"));
             localStorage.setItem('pet_id',$(this).data("pet_identifier"));
         })
+    }
+}
+
+var addPet = {
+    init: function () {
+        $('#add_pet_form').on('submit', this.sendAddPetForm)
+    },
+    sendAddPetForm: function (event) {
+        event.preventDefault();
+        $.ajax(serverAddress+'/api/Pet/AddPet',{
+            type: 'POST',
+            data: {"OwnerIdentifier":  localStorage.getItem('owner_id'),
+                "Name":  $('#name').val(),
+                "Breed":  $('#breed').val(),
+                "Color":  $('#color').val(),
+                "ChipIdentifier":  $('#chipIdentifier').val(),
+            "Type":  "1"},
+            success: function (response) {
+                alert("Pet  added");
+                petsInfo.init();
+            },
+            error: function(request, errorType, errorMessage) {
+                console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
+                alert(request.responseText);
+            }
+        })
+
     }
 }
 

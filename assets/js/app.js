@@ -18,7 +18,8 @@ $(document).ready(function() {
 
 var search =  {
     init: function () {
-        $('#search_field').on('keyup', this.queryServer)
+        $('#search_field').on('keyup', this.queryServer);
+        this.queryServer();
     },
     queryServer: function () {
         console.log("queryServer call");
@@ -65,9 +66,9 @@ var search =  {
 
 var createOwner = {
     init: function () {
-        $('#create_owner_form').on('submit', this.queryServer)
+        $('#create_owner_form').on('submit', this.sendCreateOwnerForm)
     },
-    queryServer: function (event) {
+    sendCreateOwnerForm: function (event) {
         event.preventDefault();
         $.ajax(serverAddress+'/api/Owner/CreateOwner',{
             type: 'POST',
@@ -77,13 +78,13 @@ var createOwner = {
                 "Mail":  $('#mail').val()},
             success: function (response) {
                 alert("Owner  added");
+                search.queryServer();
             },
             error: function(request, errorType, errorMessage) {
                  console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
                 alert(request.responseText);
             }
         })
-
     }
 }
 

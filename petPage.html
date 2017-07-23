@@ -52,15 +52,61 @@
 		<!-- Main -->
 		<div id="main">
 			<div class="inner">
-				<h1 id="pet_details"></h1>
+				<div><p><span class="image left"><img src="images/dogSample.jpg" alt="" /></span><h1 class="smalltitle" id="pet_details"></h1></p></div>
+				<ul class="actions">
+					<li><a href="#" class="button special">Add Appointment</a></li>
+				</ul>
 				<!--<span class="image main"><img src="images/pic13.jpg" alt="" /></span>-->
+				<!--<h3>Appointments List:</h3>-->
+				<div class="table-wrapper">
+					<table class="alt">
+						<thead>
+						<tr>
+							<th>Date</th>
+							<th>Title</th>
+							<th>Type</th>
+						</tr>
+						</thead>
+						<tbody id="appointments_list_block">
+
+						</tbody>
+
+					</table>
+				</div>
 			</div>
 		</div>
 
 		<!-- Footer -->
 		<footer id="footer">
 			<div class="inner">
+				<section>
+					<h2>Add Appointment</h2>
+					<form class="row uniform" method="post" action="#" id="add_appointment_form">
+						<div class="4u 12u$(small)">
+							<input type="radio" id="appointmentTypePeriodic" name="appointmentType" data-val="1" checked>
+							<label for="appointmentTypePeriodic">Periodic</label>
+						</div>
+						<div class="4u 12u$(small)">
+							<input type="radio" id="appointmentTypeIncident" name="appointmentType" data-val="2">
+							<label for="appointmentTypeIncident">Incident</label>
+						</div>
+						<!--<div class="field">-->
+							<!--<input type="text" name="color" id="color" placeholder="Color" />-->
+						<!--</div>-->
+						<div class="field">
+							<input type="text" name="appointmentTitle" id="appointmentTitle" placeholder="Appointment Title" />
+						</div>
+						<div class="field">
+							<textarea name="appointmentSummery" id="appointmentSummery" placeholder="Appointment Summery"></textarea>
+						</div>
+						<ul class="actions">
+							<li><input type="submit" value="Add" class="special"/></li>
+						</ul>
+					</form>
+				</section>
+				<section>
 
+				</section>
 				<ul class="copyright">
 					<li>&copy; Freudenthal. All rights reserved</li>
 				</ul>
