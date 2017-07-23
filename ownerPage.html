@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+
+	<head>
+		<link rel="shortcut icon" type="image/png" href="images/logo.png">
+		<title>LightVet</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="node_modules/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+	</head>
+	<body>
+	<!-- Wrapper -->
+	<div id="wrapper">
+
+		<!-- Header -->
+		<header id="header">
+			<div class="inner">
+
+				<!-- Logo -->
+				<a href="index.html" class="logo">
+					<span class="symbol"><img src="images/logo.svg" alt="" /></span><span class="title">Dr. Dany Freudenthal</span>
+				</a>
+
+				<!-- Nav -->
+				<nav>
+					<ul>
+						<li><a href="#menu">Menu</a></li>
+					</ul>
+				</nav>
+
+			</div>
+		</header>
+
+		<!-- Menu -->
+		<nav id="menu">
+			<h2>Menu</h2>
+			<ul>
+				<li><a href="index.html">Owners</a></li>
+				<li><a href="generic.html">Managment</a></li>
+				<li><a href="generic.html">Contact Us</a></li>
+			</ul>
+		</nav>
+
+		<!-- Main -->
+		<div id="main">
+			<div class="inner">
+				<h1 id="owner_details"></h1>
+				<!--<span class="image main"><img src="images/pic13.jpg" alt="" /></span>-->
+				<div id="owner_info">
+					<div class="inner">
+						<section class="tiles" id="pets_list_block"></section>
+					</div>
+
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<footer id="footer">
+			<div class="inner">
+				<section>
+					<h2>Add Pet</h2>
+					<form method="post" action="#" id="add_pet_form">
+						<div class="field half first">
+							<input type="text" name="name" id="name" placeholder="Name" />
+						</div>
+						<div class="field half">
+							<input type="text" name="breed" id="breed" placeholder="Breed" />
+						</div>
+						<div class="field half first">
+							<input type="text" name="color" id="color" placeholder="Color" />
+						</div>
+						<div class="field half">
+							<input type="text" name="chipNum" id="chipNum" placeholder="Chip Number" />
+						</div>
+						<div class="field">
+							<textarea name="aboutYou" id="aboutYou" placeholder="About"></textarea>
+						</div>
+						<ul class="actions">
+							<li><input type="submit" value="Create" class="special"/></li>
+						</ul>
+					</form>
+				</section>
+				<section>
+
+				</section>
+				<ul class="copyright">
+					<li>&copy; Freudenthal. All rights reserved</li>
+				</ul>
+			</div>
+		</footer>
+
+	</div>
+
+	<!-- Scripts -->
+	<script src="node_modules/jquery/dist/jquery.min.js"></script>
+	<script src="node_modules/skel.min.js"></script>
+	<script src="node_modules/mustache/mustache.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<!--[if lte IE 8]><script src="node_modules/ie/respond.min.js"></script><![endif]-->
+
+	<script src="assets/js/main.js"></script>
+	<script src="assets/js/ownerPage.js"></script>
+
+	</body>
+</html>

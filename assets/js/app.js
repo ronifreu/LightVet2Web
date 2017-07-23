@@ -12,7 +12,7 @@ $(document).ready(function() {
     });
     //Dynamic search
     search.init();
-    //
+    //Creat Owner form
     createOwner.init();
 });
 
@@ -41,22 +41,25 @@ var search =  {
             '  <span class="image">'+
             ' <img src={{image_src}} alt="" />'+
             '</span>'+
-            '<a href="generic.html">'+
+            '<a href="ownerPage.html" data-owner_identifier="{{identifier}}" class="owner_link">'+
             '<h2>{{lastName}} {{firstName}}</h2>'+
-            '<h3>{{phoneNum}}</h3>'+
+            '<h3></h3>'+
             '<div class="content">'+
-            '<p>{{petsNames}}</p>'+
+            '<p>{{phoneNum}}</p>'+
             '</div>'+
             '</a>'+
             '</article>';
 
-        console.log(response);
+
         response.forEach(function(el){
             console.log("Build HTML call");
-            rendered = rendered + Mustache.render(template, {phoneNum : el.PhoneNumber,firstName : el.FirstName,lastName : el.LastName,mail : el.Mail, petsNames : "Blacky", style_class : "style"+(Math.floor(Math.random() * 6) + 1), image_src : "images/dogSample.jpg"});
+            rendered = rendered + Mustache.render(template, {identifier : el.Identifier,phoneNum : el.PhoneNumber,firstName : el.FirstName,lastName : el.LastName,mail : el.Mail, style_class : "style"+(Math.floor(Math.random() * 6) + 1), image_src : "images/dogSample.jpg"});
         });
         $('#owners_search_res_block').html(rendered);
-
+        $(".owner_link").on('click',function () {
+            console.log($(this).data("owner_identifier"));
+            localStorage.setItem('owner_id',$(this).data("owner_identifier"));
+        })
     }
 }
 
