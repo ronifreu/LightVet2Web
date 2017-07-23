@@ -78,6 +78,7 @@ var appointmentInfo = {
 var addAppointment = {
     init: function () {
         $('#add_appointment_form').on('submit', this.sendAddAppointmentForm)
+        $('#add_appointment_form').on('click', this.sendAddAppointmentForm)
     },
     sendAddAppointmentForm: function (event) {
         event.preventDefault();
