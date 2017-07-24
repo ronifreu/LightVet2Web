@@ -4,6 +4,7 @@ $(document).ready(function() {
     petInfo.init();
     appointmentInfo.init();
     addAppointment.init();
+    certificatesGenerator.init();
 });
 
 var petInfo = {
@@ -12,6 +13,7 @@ var petInfo = {
             data: {"identifiersList[0]": localStorage.getItem('pet_id')},
             success: function (response) {
                 petInfo.showPet(response[0]);
+                localStorage.setItem('chosen_pet',JSON.stringify(response[0]));
             },
             error: function(request, errorType, errorMessage) {
                 console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
@@ -136,6 +138,20 @@ var templatesImporter = {
     no_template : {
         title : "",
         summery: ""
+    }
+}
+
+var certificatesGenerator = {
+    init: function () {
+        $('#generate_certificate_button').on('click',this.generateCertificate);
+    },
+
+    generateCertificate: function () {
+        var template = "I need cert for {{pet_name}} and the owner name is {{owner_first_name}} {{owner_last_name}}";
+        var chosen_pet = JSON.parse(localStorage.getItem('chosen_pet'));
+        var chosen_owner = JSON.parse(localStorage.getItem('chosen_owner'))
+        var rendered = Mustache.render(template, {pet_name : chosen_pet.Name,owner_first_name : chosen_owner.FirstName,owner_last_name : chosen_owner.LastName});
+        console.log(rendered);
     }
 }
 

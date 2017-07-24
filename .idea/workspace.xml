@@ -56,23 +56,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ownerPage.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ownerPage.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/assets/js/ownerPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="571">
-              <caret line="85" column="41" lean-forward="true" selection-start-line="85" selection-start-column="21" selection-end-line="85" selection-end-column="41" />
+            <state relative-caret-position="-330">
+              <caret line="39" column="13" lean-forward="true" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="petPage.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="petPage.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/assets/js/petPage.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="133" column="112" lean-forward="false" selection-start-line="133" selection-start-column="112" selection-end-line="133" selection-end-column="112" />
+            <state relative-caret-position="238">
+              <caret line="15" column="65" lean-forward="true" selection-start-line="15" selection-start-column="50" selection-end-line="15" selection-end-column="65" />
               <folding>
-                <marker date="1500914544235" expanded="true" signature="1802:1815" ph="..." />
+                <marker date="1500933999908" expanded="true" signature="1916:1929" ph="..." />
               </folding>
             </state>
           </provider>
@@ -81,10 +81,10 @@
       <file leaf-file-name="petPage.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/petPage.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
-              <caret line="109" column="50" lean-forward="false" selection-start-line="109" selection-start-column="50" selection-end-line="109" selection-end-column="50" />
+            <state relative-caret-position="408">
+              <caret line="57" column="110" lean-forward="false" selection-start-line="57" selection-start-column="83" selection-end-line="57" selection-end-column="110" />
               <folding>
-                <element signature="e#3678#3684#0" expanded="true" />
+                <element signature="e#3805#3811#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -133,6 +133,7 @@
       <find>fa-</find>
       <find>radio</find>
       <find>console</find>
+      <find>click</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -144,11 +145,11 @@
         <option value="$PROJECT_DIR$/assets/js/main.js" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/ownerPage.html" />
-        <option value="$PROJECT_DIR$/assets/js/ownerPage.js" />
         <option value="$PROJECT_DIR$/assets/js/app.js" />
         <option value="$PROJECT_DIR$/assets/css/main.css" />
         <option value="$PROJECT_DIR$/petPage.html" />
         <option value="$PROJECT_DIR$/assets/js/petPage.js" />
+        <option value="$PROJECT_DIR$/assets/js/ownerPage.js" />
       </list>
     </option>
   </component>
@@ -356,12 +357,12 @@
       <updated>1500312824672</updated>
       <workItem from="1500312825904" duration="269000" />
       <workItem from="1500371009783" duration="18801000" />
-      <workItem from="1500482627225" duration="48945000" />
+      <workItem from="1500482627225" duration="51252000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="68015000" />
+    <option name="totallyTimeSpent" value="70322000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="54" y="-8" width="1874" height="1096" extended-state="6" />
@@ -549,31 +550,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/assets/js/ownerPage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="571">
-          <caret line="85" column="41" lean-forward="true" selection-start-line="85" selection-start-column="21" selection-end-line="85" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/petPage.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="109" column="50" lean-forward="false" selection-start-line="109" selection-start-column="50" selection-end-line="109" selection-end-column="50" />
+        <state relative-caret-position="408">
+          <caret line="57" column="110" lean-forward="false" selection-start-line="57" selection-start-column="83" selection-end-line="57" selection-end-column="110" />
           <folding>
-            <element signature="e#3678#3684#0" expanded="true" />
+            <element signature="e#3805#3811#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/assets/js/petPage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="133" column="112" lean-forward="false" selection-start-line="133" selection-start-column="112" selection-end-line="133" selection-end-column="112" />
+        <state relative-caret-position="238">
+          <caret line="15" column="65" lean-forward="true" selection-start-line="15" selection-start-column="50" selection-end-line="15" selection-end-column="65" />
           <folding>
-            <marker date="1500914544235" expanded="true" signature="1802:1815" ph="..." />
+            <marker date="1500933999908" expanded="true" signature="1916:1929" ph="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/assets/js/ownerPage.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-330">
+          <caret line="39" column="13" lean-forward="true" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>

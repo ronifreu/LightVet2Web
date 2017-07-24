@@ -12,6 +12,7 @@ var ownerInfo = {
             data: {"identifiersList[0]": localStorage.getItem('owner_id')},
             success: function (response) {
                 ownerInfo.showOwner(response[0]);
+                localStorage.setItem('chosen_owner',JSON.stringify(response[0]));
             },
             error: function(request, errorType, errorMessage) {
                 console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
@@ -83,7 +84,7 @@ var addPet = {
                 "Breed":  $('#breed').val(),
                 "Color":  $('#color').val(),
                 "ChipIdentifier":  $('#chipIdentifier').val(),
-            "Type":  $('#pet-type').val()},
+                "Type":  $('#pet-type').val()},
             success: function (response) {
                 petsInfo.init();
                 $('#add_pet_form').get(0).reset();
