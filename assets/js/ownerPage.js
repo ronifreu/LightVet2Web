@@ -22,7 +22,6 @@ var ownerInfo = {
     },
 
     showOwner: function (owner) {
-        $('#owner_details').html(owner.FirstName + " " + owner.LastName + " " + owner.PhoneNumber);
         $('#owner_details').html("Name: " + owner.FirstName + " " + owner.LastName+"<br>Phone Number: " + owner.PhoneNumber+"<br><br><br><br><br><br>");
     }
 }

@@ -124,18 +124,22 @@ var addAppointment = {
 
 var templatesImporter = {
     surgery : {
+        type : 2,
         title : "בוצע ניתוח",
         summery: "המלצתי ללקוח לתת לחיה הרבה מים ומעט אוכל בשבוע הקרוב"
     },
     regular_meeting_ok : {
+        type : 1,
         title : "פגישה תקופתית",
         summery: "הממצאים נראו תקינים, המלצתי ללקוח לשוב אלי בעוד כחצי שנה לבדיקה תקופתית נוספת"
     },
     dehydration : {
+        type : 2,
         title : "סובל מייבוש חמור",
         summery: "נתתי לחיה אינפוזיה והמלצתי לבחון מידי שעה מה מצב החיה ובמקרה של התנהגות בעייתית ליצור עימי קשר"
     },
     no_template : {
+        type : 1,
         title : "",
         summery: ""
     }
@@ -151,7 +155,7 @@ var certificatesGenerator = {
         var chosen_pet = JSON.parse(localStorage.getItem('chosen_pet'));
         var chosen_owner = JSON.parse(localStorage.getItem('chosen_owner'))
         var rendered = Mustache.render(template, {pet_name : chosen_pet.Name,owner_first_name : chosen_owner.FirstName,owner_last_name : chosen_owner.LastName});
-        console.log(rendered);
+        alert("This is a POC for cert generator\n" + rendered);
     }
 }
 
