@@ -52,7 +52,8 @@
 		<!-- Main -->
 		<div id="main">
 			<div class="inner">
-				<h1 id="owner_details"></h1>
+				<div><p><span class="image left"><img src="images/UserSample.png" alt="" /></span><h1 class="smalltitle" id="owner_details"></h1></p></div>
+				<!--<h1 id="owner_details"></h1>-->
 				<!--<span class="image main"><img src="images/pic13.jpg" alt="" /></span>-->
 				<div id="owner_info">
 					<div class="inner">
@@ -70,22 +71,28 @@
 					<h2>Add Pet</h2>
 					<form method="post" action="#" id="add_pet_form">
 						<div class="field half first">
-							<input type="text" name="name" id="name" placeholder="Name" />
+							<input type="text" name="name" id="name" placeholder="Pet's Name" />
 						</div>
 						<div class="field half">
-							<input type="text" name="breed" id="breed" placeholder="Breed" />
+							<select name="pet-type" id="pet-type">
+								<option value="" selected="selected">Pet's Type</option>
+								<option value="1">Dog</option>
+								<option value="2">Cat</option>
+								<option value="3">Other</option>
+							</select>
 						</div>
 						<div class="field half first">
-							<input type="text" name="color" id="color" placeholder="Color" />
+							<input type="text" name="color" id="color" placeholder="Pet's Color" />
 						</div>
 						<div class="field half">
+							<input type="text" name="breed" id="breed" placeholder="Pet's Breed" />
+						</div>
+						<div class="field hide_chip_field">
 							<input type="text" name="chipNum" id="chipNum" placeholder="Chip Number" />
 						</div>
-						<div class="field">
-							<textarea name="aboutYou" id="aboutYou" placeholder="About"></textarea>
-						</div>
+
 						<ul class="actions">
-							<li><input type="submit" value="Create" class="special"/></li>
+							<li><input type="submit" value="Add Pet" class="special"/></li>
 						</ul>
 					</form>
 				</section>

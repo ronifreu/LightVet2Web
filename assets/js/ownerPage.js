@@ -1,4 +1,4 @@
-var serverAddress = 'http://localhost:51714'
+var serverAddress = 'http://localhost:9021'
 
 $(document).ready(function() {
     ownerInfo.init();
@@ -22,6 +22,7 @@ var ownerInfo = {
 
     showOwner: function (owner) {
         $('#owner_details').html(owner.FirstName + " " + owner.LastName + " " + owner.PhoneNumber);
+        $('#owner_details').html("Name: " + owner.FirstName + " " + owner.LastName+"<br>Phone Number: " + owner.PhoneNumber+"<br><br><br><br><br><br>");
     }
 }
 
@@ -58,7 +59,7 @@ var petsInfo = {
 
         petsList.forEach(function(el){
             console.log("Build HTML call");
-            rendered = rendered + Mustache.render(template, {identifier : el.Identifier,name : el.Name,chipNum : el.ChipIdentifier, style_class : "style"+(Math.floor(Math.random() * 6) + 1), image_src : "images/dogSample.jpg"});
+            rendered = rendered + Mustache.render(template, {identifier : el.Identifier,name : el.Name,chipNum : el.ChipIdentifier, style_class : "style"+(Math.floor(Math.random() * 6) + 1), image_src : el.Type == 1 ? "images/dogSample.jpg":"images/catSample.jpg"});
         });
         $('#pets_list_block').html(rendered);
         $(".pet_link").on('click',function () {
@@ -70,7 +71,8 @@ var petsInfo = {
 
 var addPet = {
     init: function () {
-        $('#add_pet_form').on('submit', this.sendAddPetForm)
+        $('#add_pet_form').on('submit', this.sendAddPetForm);
+        $('#pet-type').on('change',this.petSelect);
     },
     sendAddPetForm: function (event) {
         event.preventDefault();
@@ -81,10 +83,11 @@ var addPet = {
                 "Breed":  $('#breed').val(),
                 "Color":  $('#color').val(),
                 "ChipIdentifier":  $('#chipIdentifier').val(),
-            "Type":  "1"},
+            "Type":  $('#pet-type').val()},
             success: function (response) {
-                alert("Pet  added");
                 petsInfo.init();
+                $('#add_pet_form').get(0).reset();
+                alert("Pet  added");
             },
             error: function(request, errorType, errorMessage) {
                 console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
@@ -92,6 +95,12 @@ var addPet = {
             }
         })
 
+    },
+    petSelect: function (event) {
+        if($(this).val() == 1)
+            $('#chipNum').parent('div').removeClass('hide_chip_field');
+        else
+            $('#chipNum').parent('div').addClass('hide_chip_field');
     }
 }
 

@@ -1,4 +1,4 @@
-var serverAddress = 'http://localhost:51714'
+var serverAddress = 'http://localhost:9021'
 
 $(document).ready(function() {
     ////// load page behaviors actions
@@ -77,6 +77,7 @@ var createOwner = {
                 "LastName":  $('#lastName').val(),
                 "Mail":  $('#mail').val()},
             success: function (response) {
+                $('#create_owner_form').get(0).reset();
                 alert("Owner  added");
                 search.queryServer();
             },

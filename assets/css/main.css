@@ -2325,6 +2325,10 @@
 			padding: 0;
 		}
 
+		.hide_chip_field{
+			display: none;
+		}
+
 /* Image */
 
 	.image {

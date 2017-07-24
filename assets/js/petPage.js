@@ -1,7 +1,6 @@
-var serverAddress = 'http://localhost:51714'
+var serverAddress = 'http://localhost:9021'
 
 $(document).ready(function() {
-    console.log(localStorage.getItem('pet_id'));
     petInfo.init();
     appointmentInfo.init();
     addAppointment.init();
@@ -32,7 +31,6 @@ var appointmentInfo = {
         $.ajax(serverAddress+'/api/Appointment/GetAppointmentsByPetIdentifier',{
             data: {"petIdentifier": localStorage.getItem('pet_id')},
             success: function (response) {
-                console.log(response);
                 appointmentInfo.showAppointments(response);
             },
             error: function(request, errorType, errorMessage) {
@@ -42,18 +40,16 @@ var appointmentInfo = {
         })
     },
     showAppointments: function (appointments) {
-        console.log(appointments);
         var rendered = "";
         var template = '<tr class="appointment_row">'+
             '<td>{{timeCreated}}</td>'+
             '<td>{{appointmentTitle}}</td>'+
             '<td>{{appointmentType}}</td>'+
             '</tr>'+
-            '<tr style="display: none"><td colspan="3">{{appointmentSummery}}</td></tr>';
+            '<tr style="display: none" dir="rtl"><td colspan="3">{{appointmentSummery}}</td></tr>';
 
 
         appointments.forEach(function(el){
-            console.log("Build HTML call");
             rendered = rendered + Mustache.render(template, {identifier : el.Identifier,appointmentTitle : el.AppointmentTitle,appointmentSummery : el.AppointmentSummery,timeCreated : appointmentInfo.dateStringToNiceString(el.TimeCreated),appointmentType : el.Type});
         });
         $('#appointments_list_block').html(rendered);
@@ -67,8 +63,6 @@ var appointmentInfo = {
     },
 
     dateStringToNiceString: function (date) {
-        //console.log(date);
-        //return date;
         var date = new Date(date);
         return (date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + "  " + (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()));
     }
@@ -77,8 +71,8 @@ var appointmentInfo = {
 
 var addAppointment = {
     init: function () {
-        $('#add_appointment_form').on('submit', this.sendAddAppointmentForm)
-        $('#add_appointment_form').on('click', this.sendAddAppointmentForm)
+        $('#add_appointment_form').on('submit', this.sendAddAppointmentForm);
+        $('#appointment_template_picker').on('change', this.loadTemplate);
     },
     sendAddAppointmentForm: function (event) {
         event.preventDefault();
@@ -95,6 +89,7 @@ var addAppointment = {
                 "Type":  $('input[name="appointmentType"]:checked').data('val')},
             success: function (response) {
                 appointmentInfo.init();
+                $('#add_appointment_form').get(0).reset();
                 alert("Appointment  added");
             },
             error: function(request, errorType, errorMessage) {
@@ -103,6 +98,44 @@ var addAppointment = {
             }
         })
 
+    },
+
+    loadTemplate: function () {
+        if($(this).val() == "surgery"){
+            $('#appointmentSummery').val(templatesImporter.surgery.summery);
+            $('#appointmentTitle').val(templatesImporter.surgery.title);
+        }
+        if($(this).val() == "regular_meeting_ok"){
+            $('#appointmentSummery').val(templatesImporter.regular_meeting_ok.summery);
+            $('#appointmentTitle').val(templatesImporter.regular_meeting_ok.title);
+        }
+        if($(this).val() == "dehydration"){
+            $('#appointmentSummery').val(templatesImporter.dehydration.summery);
+            $('#appointmentTitle').val(templatesImporter.dehydration.title);
+        }
+        if($(this).val() == "no_template"){
+            $('#appointmentSummery').val(templatesImporter.no_template.summery);
+            $('#appointmentTitle').val(templatesImporter.no_template.title);
+        }
+    }
+}
+
+var templatesImporter = {
+    surgery : {
+        title : "בוצע ניתוח",
+        summery: "המלצתי ללקוח לתת לחיה הרבה מים ומעט אוכל בשבוע הקרוב"
+    },
+    regular_meeting_ok : {
+        title : "פגישה תקופתית",
+        summery: "הממצאים נראו תקינים, המלצתי ללקוח לשוב אלי בעוד כחצי שנה לבדיקה תקופתית נוספת"
+    },
+    dehydration : {
+        title : "סובל מייבוש חמור",
+        summery: "נתתי לחיה אינפוזיה והמלצתי לבחון מידי שעה מה מצב החיה ובמקרה של התנהגות בעייתית ליצור עימי קשר"
+    },
+    no_template : {
+        title : "",
+        summery: ""
     }
 }
 
