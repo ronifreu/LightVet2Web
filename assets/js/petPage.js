@@ -23,7 +23,8 @@ var petInfo = {
     },
 
     showPet: function (pet) {
-        console.log(pet);
+        console.log(localStorage.getItem('chosen_pet'));
+        console.log(localStorage.getItem('chosen_owner'));
         $('#pet_details').html("Name: " + pet.Name + "<br>Color: " + pet.Color + "<br>Breed:  " + pet.Breed+ "<br>Chip Number:  " + pet.ChipIdentifier);
     }
 }
@@ -147,15 +148,61 @@ var templatesImporter = {
 
 var certificatesGenerator = {
     init: function () {
-        $('#generate_certificate_button').on('click',this.generateCertificate);
+        $('#generate_certificate_button').on('click',this.generateCertificate(certificateImporter.castration));
     },
 
-    generateCertificate: function () {
+
+    generateCertificate: function (chosen_cetificate) {
+        return function (e) {
+            var chosen_pet = JSON.parse(localStorage.getItem('chosen_pet'));
+            var chosen_owner = JSON.parse(localStorage.getItem('chosen_owner'))
+            console.log(localStorage.getItem('chosen_pet'));
+            console.log(localStorage.getItem('chosen_owner'));
+            var rendered = Mustache.render(chosen_cetificate.body, certificatesGenerator.personalDataToClass());
+
+            var doc = new jsPDF();
+            doc.setFontSize(22);
+            doc.text(20, 20, chosen_cetificate.title);
+
+            doc.setFontSize(16);
+            doc.text(20, 30, rendered);
+
+            doc.save('cert.pdf')
+        };
+    },
+
+    generateCertificatePOC: function () {
         var template = "I need cert for {{pet_name}} and the owner name is {{owner_first_name}} {{owner_last_name}}";
         var chosen_pet = JSON.parse(localStorage.getItem('chosen_pet'));
         var chosen_owner = JSON.parse(localStorage.getItem('chosen_owner'))
         var rendered = Mustache.render(template, {pet_name : chosen_pet.Name,owner_first_name : chosen_owner.FirstName,owner_last_name : chosen_owner.LastName});
         alert("This is a POC for cert generator\n" + rendered);
+    },
+
+    personalDataToClass : function () {
+        var chosen_pet = JSON.parse(localStorage.getItem('chosen_pet'));
+        var chosen_owner = JSON.parse(localStorage.getItem('chosen_owner'));
+
+        var retval = {
+            pet_name : chosen_pet.Name,
+            pet_breed : chosen_pet.Breed,
+            pet_color : chosen_pet.Color,
+            pet_chip_identifier : chosen_pet.ChipIdentifier,
+            pet_type : chosen_pet.Type,
+            owner_first_name : chosen_owner.FirstName,
+            owner_last_name : chosen_owner.LastName,
+            owner_phone : chosen_owner.PhoneNumber,
+            owner_mail : chosen_owner.Mail,
+            //owner_id_num : chosen_owner.IdNum
+        }
+        return retval;
+    }
+}
+
+var certificateImporter = {
+    castration : {
+        title : "אישור וטרינרי לעיקור כלבים",
+        body: "I need cert for {{pet_name}} and the owner name is {{owner_first_name}} {{owner_last_name}}"
     }
 }
 
