@@ -1,15 +1,9 @@
 var serverAddress = 'http://localhost:9021'
 
 $(document).ready(function() {
+    //Set Dr Details
+    localStorage.setItem('chosen_dr','{"LicenseNum":"00777","FirstName":"דני","LastName":"דני","Address":"שי עגנון 10 כפר סבא","PhoneNum":"0547712231"}');
     ////// load page behaviors actions
-    //Test with 'Get Owners Button
-    $('#owners_list').on('click', 'button', function() {
-        $.ajax(serverAddress+'/api/Owner',{
-            success: function (response) {
-                $('.owners').text(JSON.stringify(response));
-            }
-        });
-    });
     //Dynamic search
     search.init();
     //Creat Owner form
@@ -53,7 +47,6 @@ var search =  {
 
 
         response.forEach(function(el){
-            console.log("Build HTML call");
             rendered = rendered + Mustache.render(template, {identifier : el.Identifier,phoneNum : el.PhoneNumber,firstName : el.FirstName,lastName : el.LastName,mail : el.Mail, style_class : "style"+(Math.floor(Math.random() * 6) + 1), image_src : "images/dogSample.jpg"});
         });
         $('#owners_search_res_block').html(rendered);

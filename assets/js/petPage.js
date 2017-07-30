@@ -1,10 +1,12 @@
-var serverAddress = 'http://localhost:9021'
+var serverAddress = 'http://localhost:9021';
+var appointmentsTemplatesList = [];
 
 $(document).ready(function() {
     petInfo.init();
     appointmentInfo.init();
     addAppointment.init();
     certificatesGenerator.init();
+    templateDropDown.init();
 });
 
 var petInfo = {
@@ -23,8 +25,6 @@ var petInfo = {
     },
 
     showPet: function (pet) {
-        console.log(localStorage.getItem('chosen_pet'));
-        console.log(localStorage.getItem('chosen_owner'));
         $('#pet_details').html("Name: " + pet.Name + "<br>Color: " + pet.Color + "<br>Breed:  " + pet.Breed+ "<br>Chip Number:  " + pet.ChipIdentifier);
     }
 }
@@ -45,11 +45,11 @@ var appointmentInfo = {
     showAppointments: function (appointments) {
         var rendered = "";
         var template = '<tr class="appointment_row">'+
-            '<td>{{timeCreated}}</td>'+
-            '<td>{{appointmentTitle}}</td>'+
-            '<td>{{appointmentType}}</td>'+
+            '<td class="textDir textDirRtl">{{appointmentType}}</td>'+
+            '<td class="textDir textDirRtl">{{appointmentTitle}}</td>'+
+            '<td class="textDir textDirRtl">{{timeCreated}}</td>'+
             '</tr>'+
-            '<tr style="display: none" dir="rtl"><td colspan="3">{{appointmentSummery}}</td></tr>';
+            '<tr style="display: none" class="textDir textDirRtl"><td colspan="3">{{appointmentSummery}}</td></tr>';
 
 
         appointments.forEach(function(el){
@@ -75,7 +75,6 @@ var appointmentInfo = {
 var addAppointment = {
     init: function () {
         $('#add_appointment_form').on('submit', this.sendAddAppointmentForm);
-        $('#appointment_template_picker').on('change', this.loadTemplate);
     },
     sendAddAppointmentForm: function (event) {
         event.preventDefault();
@@ -103,46 +102,46 @@ var addAppointment = {
 
     },
 
-    loadTemplate: function () {
-        if($(this).val() == "surgery"){
-            $('#appointmentSummery').val(templatesImporter.surgery.summery);
-            $('#appointmentTitle').val(templatesImporter.surgery.title);
-        }
-        if($(this).val() == "regular_meeting_ok"){
-            $('#appointmentSummery').val(templatesImporter.regular_meeting_ok.summery);
-            $('#appointmentTitle').val(templatesImporter.regular_meeting_ok.title);
-        }
-        if($(this).val() == "dehydration"){
-            $('#appointmentSummery').val(templatesImporter.dehydration.summery);
-            $('#appointmentTitle').val(templatesImporter.dehydration.title);
-        }
-        if($(this).val() == "no_template"){
-            $('#appointmentSummery').val(templatesImporter.no_template.summery);
-            $('#appointmentTitle').val(templatesImporter.no_template.title);
-        }
-    }
+
 }
 
-var templatesImporter = {
-    surgery : {
-        type : 2,
-        title : "בוצע ניתוח",
-        summery: "המלצתי ללקוח לתת לחיה הרבה מים ומעט אוכל בשבוע הקרוב"
+var templateDropDown = {
+    init: function(){
+        $('#appointment_template_picker').on('change', this.loadTemplate);
+        $.ajax(serverAddress+'/api/Appointment/GetAppointmentTemplates',{
+            success: this.populateTemplatesDropDown,
+            error: function(request, errorType, errorMessage) {
+                console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
+                alert(request.responseText)
+            }
+        })
     },
-    regular_meeting_ok : {
-        type : 1,
-        title : "פגישה תקופתית",
-        summery: "הממצאים נראו תקינים, המלצתי ללקוח לשוב אלי בעוד כחצי שנה לבדיקה תקופתית נוספת"
+
+    populateTemplatesDropDown : function (response) {
+        console.log("populateTemplatesDropDown call");
+        appointmentsTemplatesList = response;
+
+        var rendered = '<option value="no_template" selected="selected">No template</option>';
+        var template = '<option value={{identifier}}>{{appointmentTitle}}</option>';
+
+        response.forEach(function(el){
+            rendered = rendered + Mustache.render(template, {identifier : el.Identifier,appointmentTitle : el.AppointmentTitle});
+        });
+        $('#appointment_template_picker').html(rendered);
     },
-    dehydration : {
-        type : 2,
-        title : "סובל מייבוש חמור",
-        summery: "נתתי לחיה אינפוזיה והמלצתי לבחון מידי שעה מה מצב החיה ובמקרה של התנהגות בעייתית ליצור עימי קשר"
+
+    loadTemplate: function () {
+        var chosen_template = templateDropDown.templatesFilterByTitle($(this).val())[0];
+        if(chosen_template){
+             $('#appointmentSummery').val(chosen_template.AppointmentSummery);
+             $('#appointmentTitle').val(chosen_template.AppointmentTitle);
+        }
     },
-    no_template : {
-        type : 1,
-        title : "",
-        summery: ""
+    
+    templatesFilterByTitle : function (value) {
+        return appointmentsTemplatesList.filter(function(el) {
+            return el.Identifier == value;
+        })
     }
 }
 
@@ -154,10 +153,6 @@ var certificatesGenerator = {
 
     generateCertificate: function (chosen_cetificate) {
         return function (e) {
-            var chosen_pet = JSON.parse(localStorage.getItem('chosen_pet'));
-            var chosen_owner = JSON.parse(localStorage.getItem('chosen_owner'))
-            console.log(localStorage.getItem('chosen_pet'));
-            console.log(localStorage.getItem('chosen_owner'));
             var rendered = Mustache.render(chosen_cetificate.body, certificatesGenerator.personalDataToClass());
 
             var doc = new jsPDF();
@@ -182,6 +177,7 @@ var certificatesGenerator = {
     personalDataToClass : function () {
         var chosen_pet = JSON.parse(localStorage.getItem('chosen_pet'));
         var chosen_owner = JSON.parse(localStorage.getItem('chosen_owner'));
+        var chosen_dr = JSON.parse(localStorage.getItem('chosen_dr'));
 
         var retval = {
             pet_name : chosen_pet.Name,
@@ -194,6 +190,11 @@ var certificatesGenerator = {
             owner_phone : chosen_owner.PhoneNumber,
             owner_mail : chosen_owner.Mail,
             //owner_id_num : chosen_owner.IdNum
+            dr_first_name : chosen_dr.FirstName,
+            dr_first_name : chosen_dr.FirstName,
+            dr_first_name : chosen_dr.FirstName,
+            dr_first_name : chosen_dr.FirstName,
+
         }
         return retval;
     }
@@ -205,8 +206,3 @@ var certificateImporter = {
         body: "I need cert for {{pet_name}} and the owner name is {{owner_first_name}} {{owner_last_name}}"
     }
 }
-
-
-
-
-

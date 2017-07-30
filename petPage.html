@@ -65,9 +65,10 @@
 					<table class="alt">
 						<thead>
 						<tr>
-							<th>Date</th>
-							<th>Title</th>
 							<th>Type</th>
+							<th>Title</th>
+							<th>Date</th>
+
 						</tr>
 						</thead>
 						<tbody id="appointments_list_block">
@@ -97,10 +98,10 @@
 							<!--<input type="text" name="color" id="color" placeholder="Color" />-->
 						<!--</div>-->
 						<div class="field">
-							<input type="text" name="appointmentTitle" id="appointmentTitle" placeholder="Appointment Title" />
+							<input type="text" name="appointmentTitle" id="appointmentTitle" class="textDir textDirRtl" placeholder="Appointment Title" />
 						</div>
 						<div class="field">
-							<textarea name="appointmentSummery" id="appointmentSummery" placeholder="Appointment Summery"></textarea>
+							<textarea name="appointmentSummery" id="appointmentSummery" class="textDir textDirRtl" placeholder="Appointment Summery"></textarea>
 						</div>
 						<ul class="actions">
 							<li><input type="submit" value="Add" class="special"/></li>
@@ -109,11 +110,8 @@
 				</section>
 				<section>
 					<h2>Appointment Template:</h2>
-					<select name="appointment-template" id="appointment_template_picker">
-						<option value="no_template" selected="selected">No template</option>
-						<option value="regular_meeting_ok">Regular Meeting Ok</option>
-						<option value="dehydration">Dehydration</option>
-						<option value="surgery">Surgery</option>
+					<select name="appointment-template" class="textDir textDirRtl" id="appointment_template_picker">
+						<option value="no_template" selected="selected">LOADING TEMPLATES</option>
 					</select>
 				</section>
 				<ul class="copyright">

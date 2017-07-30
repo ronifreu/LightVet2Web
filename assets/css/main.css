@@ -3362,3 +3362,16 @@
 			}
 
 		}
+
+/* RONI COSTOM */
+
+.textDir {
+}
+
+.textDirRtl {
+	direction: rtl;
+}
+
+.textDirLtr {
+	direction: ltr;
+}
