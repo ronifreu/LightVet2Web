@@ -45,7 +45,7 @@ var appointmentInfo = {
     showAppointments: function (appointments) {
         var rendered = "";
         var template = '<tr class="appointment_row">'+
-            '<td class="textDir textDirRtl">{{appointmentType}}</td>'+
+            '<td class="">{{appointmentType}}</td>'+
             '<td class="textDir textDirRtl">{{appointmentTitle}}</td>'+
             '<td class="textDir textDirRtl">{{timeCreated}}</td>'+
             '</tr>'+
@@ -53,7 +53,7 @@ var appointmentInfo = {
 
 
         appointments.forEach(function(el){
-            rendered = rendered + Mustache.render(template, {identifier : el.Identifier,appointmentTitle : el.AppointmentTitle,appointmentSummery : el.AppointmentSummery,timeCreated : appointmentInfo.dateStringToNiceString(el.TimeCreated),appointmentType : el.Type});
+            rendered = rendered + Mustache.render(template, {identifier : el.Identifier,appointmentTitle : el.AppointmentTitle,appointmentSummery : el.AppointmentSummery,timeCreated : appointmentInfo.dateStringToNiceString(el.TimeCreated),appointmentType : enumConverter.appointmentType.fromNumToStr(el.Type)});
         });
         $('#appointments_list_block').html(rendered);
         this.appointmentListBehavior();
@@ -147,63 +147,31 @@ var templateDropDown = {
 
 var certificatesGenerator = {
     init: function () {
-        $('#generate_certificate_button').on('click',this.generateCertificate(certificateImporter.castration));
+        $('#generate_certificate_button').on('click',this.generateCertificate(this.certificatesNamesList[0]));
     },
 
+    certificatesNamesList : ["castration","flight"],
 
     generateCertificate: function (chosen_cetificate) {
-        return function (e) {
-
-            $.ajax('assets/certificates/cert1.txt',{
+        return function () {
+            $.ajax('assets/certificates/'+chosen_cetificate+'.html',{
                 success: function (response) {
-                    chosen_cetificate = response;
-                    var rendered = Mustache.render(chosen_cetificate.toString(), certificatesGenerator.personalDataToClass());
+                    var personalData = certificatesGenerator.personalDataToClass();
+                    var rendered = Mustache.render(response.toString(), personalData);
                     $('#divon').html(rendered);
                     var doc = new jsPDF();
-                    doc.setFontSize(16);
-                    doc.text(20, 30, "asfas");
                     doc.addHTML($('#divon'),function () {
-                        doc.save('cert.pdf');
-                        $('#divon').addClass("hide-all")
+                        doc.save(personalData.pet_chip_identifier+'_'+chosen_cetificate+'.pdf');
+                        $('#divon').html("");
                     });
-
-                    //certificatesGenerator.certToPng();
-                    //$('#divon').addClass("hide-all")
                 },
                 error: function(request, errorType, errorMessage) {
                     console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
                     alert(request.responseText)
                 }
             })
-
-            // var rendered = Mustache.render(chosen_cetificate.body, certificatesGenerator.personalDataToClass());
-            //
-            // var doc = new jsPDF();
-            // doc.setFontSize(22);
-            // doc.text(20, 20, chosen_cetificate.title);
-            //
-            // doc.setFontSize(16);
-            // doc.text(20, 30, rendered);
-            //
-            // doc.save('cert.pdf')
         };
     },
-
-    certToPng : function () {
-        html2canvas(document.getElementById("divon"), {
-            onrendered: function(canvas) {
-                var imageElem = document.getElementById('image');
-                //document.body.appendChild(canvas);
-                imageElem.src = canvas.getContext('2d').canvas.toDataURL();
-                //console.log(imageElem.src);
-                var download = document.createElement('a');
-                download.href = imageElem.src;
-                download.download = 'images/lala.png';
-                download.click();
-            }
-        });
-    },
-
     personalDataToClass : function () {
         var chosen_pet = JSON.parse(localStorage.getItem('chosen_pet'));
         var chosen_owner = JSON.parse(localStorage.getItem('chosen_owner'));
@@ -227,12 +195,5 @@ var certificatesGenerator = {
             dr_address : chosen_dr.Address
         }
         return retval;
-    }
-}
-
-var certificateImporter = {
-    castration : {
-        title : "אישור וטרינרי לעיקור כלבים",
-        body: "I need cert for {{pet_name}} and the owner name is {{owner_first_name}} {{owner_last_name}} my license is {{dr_license_num}}"
     }
 }
