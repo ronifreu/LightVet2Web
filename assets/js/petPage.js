@@ -153,25 +153,55 @@ var certificatesGenerator = {
 
     generateCertificate: function (chosen_cetificate) {
         return function (e) {
-            var rendered = Mustache.render(chosen_cetificate.body, certificatesGenerator.personalDataToClass());
 
-            var doc = new jsPDF();
-            doc.setFontSize(22);
-            doc.text(20, 20, chosen_cetificate.title);
+            $.ajax('assets/certificates/cert1.txt',{
+                success: function (response) {
+                    chosen_cetificate = response;
+                    var rendered = Mustache.render(chosen_cetificate.toString(), certificatesGenerator.personalDataToClass());
+                    $('#divon').html(rendered);
+                    var doc = new jsPDF();
+                    doc.setFontSize(16);
+                    doc.text(20, 30, "asfas");
+                    doc.addHTML($('#divon'),function () {
+                        doc.save('cert.pdf');
+                        $('#divon').addClass("hide-all")
+                    });
 
-            doc.setFontSize(16);
-            doc.text(20, 30, rendered);
+                    //certificatesGenerator.certToPng();
+                    //$('#divon').addClass("hide-all")
+                },
+                error: function(request, errorType, errorMessage) {
+                    console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
+                    alert(request.responseText)
+                }
+            })
 
-            doc.save('cert.pdf')
+            // var rendered = Mustache.render(chosen_cetificate.body, certificatesGenerator.personalDataToClass());
+            //
+            // var doc = new jsPDF();
+            // doc.setFontSize(22);
+            // doc.text(20, 20, chosen_cetificate.title);
+            //
+            // doc.setFontSize(16);
+            // doc.text(20, 30, rendered);
+            //
+            // doc.save('cert.pdf')
         };
     },
 
-    generateCertificatePOC: function () {
-        var template = "I need cert for {{pet_name}} and the owner name is {{owner_first_name}} {{owner_last_name}}";
-        var chosen_pet = JSON.parse(localStorage.getItem('chosen_pet'));
-        var chosen_owner = JSON.parse(localStorage.getItem('chosen_owner'))
-        var rendered = Mustache.render(template, {pet_name : chosen_pet.Name,owner_first_name : chosen_owner.FirstName,owner_last_name : chosen_owner.LastName});
-        alert("This is a POC for cert generator\n" + rendered);
+    certToPng : function () {
+        html2canvas(document.getElementById("divon"), {
+            onrendered: function(canvas) {
+                var imageElem = document.getElementById('image');
+                //document.body.appendChild(canvas);
+                imageElem.src = canvas.getContext('2d').canvas.toDataURL();
+                //console.log(imageElem.src);
+                var download = document.createElement('a');
+                download.href = imageElem.src;
+                download.download = 'images/lala.png';
+                download.click();
+            }
+        });
     },
 
     personalDataToClass : function () {
@@ -191,10 +221,10 @@ var certificatesGenerator = {
             owner_mail : chosen_owner.Mail,
             //owner_id_num : chosen_owner.IdNum
             dr_first_name : chosen_dr.FirstName,
-            dr_first_name : chosen_dr.FirstName,
-            dr_first_name : chosen_dr.FirstName,
-            dr_first_name : chosen_dr.FirstName,
-
+            dr_last_name : chosen_dr.LastName,
+            dr_license_num : chosen_dr.LicenseNum,
+            dr_phone : chosen_dr.PhoneNumber,
+            dr_address : chosen_dr.Address
         }
         return retval;
     }
@@ -203,6 +233,6 @@ var certificatesGenerator = {
 var certificateImporter = {
     castration : {
         title : "אישור וטרינרי לעיקור כלבים",
-        body: "I need cert for {{pet_name}} and the owner name is {{owner_first_name}} {{owner_last_name}}"
+        body: "I need cert for {{pet_name}} and the owner name is {{owner_first_name}} {{owner_last_name}} my license is {{dr_license_num}}"
     }
 }

@@ -3375,3 +3375,7 @@
 .textDirLtr {
 	direction: ltr;
 }
+
+.hide-all {
+	display: none;
+}

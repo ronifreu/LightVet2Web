@@ -2,7 +2,7 @@ var serverAddress = 'http://localhost:9021'
 
 $(document).ready(function() {
     //Set Dr Details
-    localStorage.setItem('chosen_dr','{"LicenseNum":"00777","FirstName":"דני","LastName":"דני","Address":"שי עגנון 10 כפר סבא","PhoneNum":"0547712231"}');
+    localStorage.setItem('chosen_dr','{"LicenseNum":"00777","FirstName":"דני","LastName":"פרוידנטל","Address":"שי עגנון 10 כפר סבא","PhoneNumber":"0547712231"}');
     ////// load page behaviors actions
     //Dynamic search
     search.init();
