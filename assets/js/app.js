@@ -68,6 +68,8 @@ var createOwner = {
             data: {"PhoneNumber":  $('#phoneNumber').val(),
                 "FirstName":  $('#firstName').val(),
                 "LastName":  $('#lastName').val(),
+                "IdNumber":  $('#mail').val(),
+                "Address":  $('#mail').val(),
                 "Mail":  $('#mail').val()},
             success: function (response) {
                 $('#create_owner_form').get(0).reset();

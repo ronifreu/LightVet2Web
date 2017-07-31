@@ -13,3 +13,14 @@ var enumConverter = {
         values : ["General","Periodic","Incident","GeneralSurgery"]
     }
 }
+
+var stringFormater = {
+    dateStringToNiceStringWithTime: function (date) {
+        var date = new Date(date);
+        return (date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + "  " + (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()));
+    },
+    dateStringToNiceString: function (date) {
+        var date = new Date(date);
+        return (date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
+    }
+}

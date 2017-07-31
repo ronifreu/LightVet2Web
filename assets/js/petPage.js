@@ -19,7 +19,7 @@ var petInfo = {
             },
             error: function(request, errorType, errorMessage) {
                 console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
-                alert(request.responseText)
+                alert(request.responseText);
             }
         })
     },
@@ -53,7 +53,7 @@ var appointmentInfo = {
 
 
         appointments.forEach(function(el){
-            rendered = rendered + Mustache.render(template, {identifier : el.Identifier,appointmentTitle : el.AppointmentTitle,appointmentSummery : el.AppointmentSummery,timeCreated : appointmentInfo.dateStringToNiceString(el.TimeCreated),appointmentType : enumConverter.appointmentType.fromNumToStr(el.Type)});
+            rendered = rendered + Mustache.render(template, {identifier : el.Identifier,appointmentTitle : el.AppointmentTitle,appointmentSummery : el.AppointmentSummery,timeCreated : stringFormater.dateStringToNiceStringWithTime(el.TimeCreated),appointmentType : enumConverter.appointmentType.fromNumToStr(el.Type)});
         });
         $('#appointments_list_block').html(rendered);
         this.appointmentListBehavior();
@@ -65,10 +65,6 @@ var appointmentInfo = {
         })
     },
 
-    dateStringToNiceString: function (date) {
-        var date = new Date(date);
-        return (date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear() + "  " + (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ":" + (date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes()));
-    }
 
 }
 
@@ -147,22 +143,26 @@ var templateDropDown = {
 
 var certificatesGenerator = {
     init: function () {
-        $('#generate_certificate_button').on('click',this.generateCertificate(this.certificatesNamesList[0]));
+        $('.certificate-item').on('click',this.generateCertificate(this.certificatesNamesList[0]));
     },
-
     certificatesNamesList : ["castration","flight"],
 
     generateCertificate: function (chosen_cetificate) {
         return function () {
+            chosen_cetificate = $(this).data("cert_type");
             $.ajax('assets/certificates/'+chosen_cetificate+'.html',{
                 success: function (response) {
+                    var certificateElement = $('#divon');
                     var personalData = certificatesGenerator.personalDataToClass();
+                    personalData.time = stringFormater.dateStringToNiceString(Date.now());
                     var rendered = Mustache.render(response.toString(), personalData);
-                    $('#divon').html(rendered);
+                    certificateElement.removeClass("hide-all");
+                    certificateElement.html(rendered);
                     var doc = new jsPDF();
-                    doc.addHTML($('#divon'),function () {
+                    doc.addHTML(certificateElement,function () {
                         doc.save(personalData.pet_chip_identifier+'_'+chosen_cetificate+'.pdf');
-                        $('#divon').html("");
+                        //certificateElement.html("");
+                        certificateElement.addClass("hide-all");
                     });
                 },
                 error: function(request, errorType, errorMessage) {
@@ -187,7 +187,7 @@ var certificatesGenerator = {
             owner_last_name : chosen_owner.LastName,
             owner_phone : chosen_owner.PhoneNumber,
             owner_mail : chosen_owner.Mail,
-            //owner_id_num : chosen_owner.IdNum
+            owner_id_num : chosen_owner.IdNumber,
             dr_first_name : chosen_dr.FirstName,
             dr_last_name : chosen_dr.LastName,
             dr_license_num : chosen_dr.LicenseNum,
