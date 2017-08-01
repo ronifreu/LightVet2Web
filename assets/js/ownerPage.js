@@ -77,25 +77,26 @@ var addPet = {
     },
     sendAddPetForm: function (event) {
         event.preventDefault();
-        $.ajax(serverAddress+'/api/Pet/AddPet',{
-            type: 'POST',
-            data: {"OwnerIdentifier":  localStorage.getItem('owner_id'),
-                "Name":  $('#name').val(),
-                "Breed":  $('#breed').val(),
-                "Color":  $('#color').val(),
-                "ChipIdentifier":  $('#chipIdentifier').val(),
-                "Type":  $('#pet-type').val()},
-            success: function (response) {
-                petsInfo.init();
-                $('#add_pet_form').get(0).reset();
-                alert("Pet  added");
-            },
-            error: function(request, errorType, errorMessage) {
-                console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
-                alert(request.responseText);
-            }
-        })
-
+        if($(this).valid()){
+            $.ajax(serverAddress+'/api/Pet/AddPet',{
+                type: 'POST',
+                data: {"OwnerIdentifier":  localStorage.getItem('owner_id'),
+                    "Name":  $('#name').val(),
+                    "Breed":  $('#breed').val(),
+                    "Color":  $('#color').val(),
+                    "ChipIdentifier":  $('#chipIdentifier').val(),
+                    "Type":  $('#pet-type').val()},
+                success: function (response) {
+                    petsInfo.init();
+                    $('#add_pet_form').get(0).reset();
+                    alert("Pet  added");
+                },
+                error: function(request, errorType, errorMessage) {
+                    console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
+                    alert(request.responseText);
+                }
+            })
+        }
     },
     petSelect: function (event) {
         if($(this).val() == 1)
@@ -125,7 +126,6 @@ var addPet = {
                     rangelength: [9, 9]
                 },
                 chipNum: {
-                    required: true,
                     rangelength: [15, 15]
                 }
             }

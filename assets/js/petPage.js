@@ -70,34 +70,50 @@ var appointmentInfo = {
 
 var addAppointment = {
     init: function () {
+        this.initFormValidation();
         $('#add_appointment_form').on('submit', this.sendAddAppointmentForm);
     },
     sendAddAppointmentForm: function (event) {
         event.preventDefault();
         console.log($('input[name="appointmentType"]:checked').data('val'));
-        $.ajax(serverAddress+'/api/Appointment/AddAppointment',{
-            type: 'POST',
-            data: {"OwnerIdentifier":  localStorage.getItem('owner_id'),
-                "PetIdentifier":  localStorage.getItem('pet_id'),
-                "AppointmentTitle":  $('#appointmentTitle').val(),
-                "Identifier":  "",
-                "TimeCreated": "",
-                "TimeModified": "",
-                "AppointmentSummery":  $('#appointmentSummery').val(),
-                "Type":  $('input[name="appointmentType"]:checked').data('val')},
-            success: function (response) {
-                appointmentInfo.init();
-                $('#add_appointment_form').get(0).reset();
-                alert("Appointment  added");
-            },
-            error: function(request, errorType, errorMessage) {
-                console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
-                alert(request.responseText);
-            }
-        })
-
+        if($(this).valid()) {
+            $.ajax(serverAddress + '/api/Appointment/AddAppointment', {
+                type: 'POST',
+                data: {
+                    "OwnerIdentifier": localStorage.getItem('owner_id'),
+                    "PetIdentifier": localStorage.getItem('pet_id'),
+                    "AppointmentTitle": $('#appointmentTitle').val(),
+                    "Identifier": "",
+                    "TimeCreated": "",
+                    "TimeModified": "",
+                    "AppointmentSummery": $('#appointmentSummery').val(),
+                    "Type": $('input[name="appointmentType"]:checked').data('val')
+                },
+                success: function (response) {
+                    appointmentInfo.init();
+                    $('#add_appointment_form').get(0).reset();
+                    alert("Appointment  added");
+                },
+                error: function (request, errorType, errorMessage) {
+                    console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" + request.responseText);
+                    alert(request.responseText);
+                }
+            })
+        }
     },
+    initFormValidation : function () {
 
+        $('#add_appointment_form').validate({
+            rules: {
+                appointmentTitle: {
+                    required : true,
+                },
+                appointmentSummery:{
+                    required : true,
+                }
+            }
+        });
+    }
 
 }
 
@@ -129,8 +145,12 @@ var templateDropDown = {
     loadTemplate: function () {
         var chosen_template = templateDropDown.templatesFilterByTitle($(this).val())[0];
         if(chosen_template){
-             $('#appointmentSummery').val(chosen_template.AppointmentSummery);
-             $('#appointmentTitle').val(chosen_template.AppointmentTitle);
+             var sum = $('#appointmentSummery');
+             var title = $('#appointmentTitle')
+             sum.val(chosen_template.AppointmentSummery);
+             title.val(chosen_template.AppointmentTitle);
+             sum.trigger('keyup');
+             title.trigger('keyup');
         }
     },
     
