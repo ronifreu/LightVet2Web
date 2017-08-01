@@ -71,6 +71,7 @@ var petsInfo = {
 
 var addPet = {
     init: function () {
+        this.initFormValidation();
         $('#add_pet_form').on('submit', this.sendAddPetForm);
         $('#pet-type').on('change',this.petSelect);
     },
@@ -101,6 +102,34 @@ var addPet = {
             $('#chipNum').parent('div').removeClass('hide_chip_field');
         else
             $('#chipNum').parent('div').addClass('hide_chip_field');
+    },
+
+    initFormValidation : function () {
+
+        $('#add_pet_form').validate({
+            rules: {
+                name: {
+                    required : true,
+                    rangelength: [2, 50]
+                },
+                breed:{
+                    required : true,
+                    rangelength: [2, 50]
+                },
+                color: {
+                    required : true,
+                    rangelength: [2, 50]
+                },
+                idNumber:{
+                    required : true,
+                    rangelength: [9, 9]
+                },
+                chipNum: {
+                    required: true,
+                    rangelength: [15, 15]
+                }
+            }
+        });
     }
 }
 

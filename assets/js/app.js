@@ -59,28 +59,71 @@ var search =  {
 
 var createOwner = {
     init: function () {
+        this.initFormValidation();
         $('#create_owner_form').on('submit', this.sendCreateOwnerForm)
     },
     sendCreateOwnerForm: function (event) {
         event.preventDefault();
-        $.ajax(serverAddress+'/api/Owner/CreateOwner',{
-            type: 'POST',
-            data: {"PhoneNumber":  $('#phoneNumber').val(),
-                "FirstName":  $('#firstName').val(),
-                "LastName":  $('#lastName').val(),
-                "IdNumber":  $('#mail').val(),
-                "Address":  $('#mail').val(),
-                "Mail":  $('#mail').val()},
-            success: function (response) {
-                $('#create_owner_form').get(0).reset();
-                alert("Owner  added");
-                search.queryServer();
+        if($(this).valid()){
+            $.ajax(serverAddress+'/api/Owner/CreateOwner',{
+                type: 'POST',
+                data: {"PhoneNumber":  $('#phoneNumber').val(),
+                    "FirstName":  $('#firstName').val(),
+                    "LastName":  $('#lastName').val(),
+                    "IdNumber":  $('#mail').val(),
+                    "Address":  $('#mail').val(),
+                    "Mail":  $('#mail').val()},
+                success: function (response) {
+                    $('#create_owner_form').get(0).reset();
+                    alert("Owner  added");
+                    search.queryServer();
+                },
+                error: function(request, errorType, errorMessage) {
+                    console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
+                    alert(request.responseText);
+                }
+            })
+        }
+    },
+
+    initFormValidation : function () {
+        $.validator.addMethod(
+            "regex",
+            function(value, element, regexp) {
+                var re = new RegExp(regexp);
+                console.log(re.test(value));
+                return this.optional(element) || re.test(value);
             },
-            error: function(request, errorType, errorMessage) {
-                 console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
-                alert(request.responseText);
+            "Phone number in the formation -> 0545123123"
+        );
+
+        $('#create_owner_form').validate({
+            rules: {
+                email: {
+                    email: true
+                },
+                firstName:{
+                    required : true,
+                    rangelength: [2, 50]
+                },
+                lastName: {
+                    required : true,
+                    rangelength: [2, 50]
+                },
+                phoneNumber:{
+                    required : true,
+                    regex: /0\d{1,2}-?\d{7}/
+                },
+                address:{
+                    required : true,
+                    rangelength: [2, 50]
+                },
+                idNumber:{
+                    required : true,
+                    rangelength: [9, 9]
+                }
             }
-        })
+        });
     }
 }
 
