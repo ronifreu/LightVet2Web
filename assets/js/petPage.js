@@ -1,4 +1,4 @@
-var serverAddress = 'http://localhost:9021';
+var serverAddress = 'http://localhost:9000';
 var appointmentsTemplatesList = [];
 
 $(document).ready(function() {
@@ -25,7 +25,7 @@ var petInfo = {
     },
 
     showPet: function (pet) {
-        $('#pet_details').html("Name: " + pet.Name + "<br>Color: " + pet.Color + "<br>Breed:  " + pet.Breed+ "<br>Chip Number:  " + pet.ChipIdentifier);
+        $('#pet_details').html("Name: " + pet.Name + "<br>Color: " + pet.Color + "<br>Breed:  " + pet.Breed+ "<br>Chip Number:  " + pet.ChipIdentifier+ "<br>BirthDate:  " +stringFormater.dateStringToNiceString(pet.DateOfBirth) +" (Age: "+stringFormater.dateStringToNiceAge(pet.DateOfBirth)+")");
     }
 }
 
@@ -203,6 +203,7 @@ var certificatesGenerator = {
             pet_color : chosen_pet.Color,
             pet_chip_identifier : chosen_pet.ChipIdentifier,
             pet_type : chosen_pet.Type,
+            pet_birthdate : chosen_pet.DateOfBirth,
             owner_first_name : chosen_owner.FirstName,
             owner_last_name : chosen_owner.LastName,
             owner_phone : chosen_owner.PhoneNumber,

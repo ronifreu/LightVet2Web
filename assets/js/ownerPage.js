@@ -1,4 +1,4 @@
-var serverAddress = 'http://localhost:9021'
+var serverAddress = 'http://localhost:9000'
 
 $(document).ready(function() {
     ownerInfo.init();
@@ -16,13 +16,13 @@ var ownerInfo = {
             },
             error: function(request, errorType, errorMessage) {
                 console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
-                alert(request.responseText)
+                alert(request.responseText);
             }
         })
     },
 
     showOwner: function (owner) {
-        $('#owner_details').html("Name: " + owner.FirstName + " " + owner.LastName+"<br>Phone Number: " + owner.PhoneNumber+"<br><br><br><br><br><br>");
+        $('#owner_details').html("Name: " + owner.FirstName + " " + owner.LastName+"<br>Phone Number: " + owner.PhoneNumber+"<br>Address: " + owner.Address+"<br><br><br><br><br>");
     }
 }
 
@@ -84,8 +84,9 @@ var addPet = {
                     "Name":  $('#name').val(),
                     "Breed":  $('#breed').val(),
                     "Color":  $('#color').val(),
-                    "ChipIdentifier":  $('#chipIdentifier').val(),
-                    "Type":  $('#pet-type').val()},
+                    "ChipIdentifier":  $('#chipNum').val(),
+                    "Type":  $('#pet-type').val(),
+                    "Age":  $('#pet-age').val()},
                 success: function (response) {
                     petsInfo.init();
                     $('#add_pet_form').get(0).reset();

@@ -1,4 +1,4 @@
-var serverAddress = 'http://localhost:9021'
+var serverAddress = 'http://localhost:9000'
 
 $(document).ready(function() {
     //Set Dr Details
@@ -70,9 +70,9 @@ var createOwner = {
                 data: {"PhoneNumber":  $('#phoneNumber').val(),
                     "FirstName":  $('#firstName').val(),
                     "LastName":  $('#lastName').val(),
-                    "IdNumber":  $('#mail').val(),
-                    "Address":  $('#mail').val(),
-                    "Mail":  $('#mail').val()},
+                    "IdNumber":  $('#idNumber').val(),
+                    "Address":  $('#address').val(),
+                    "Mail":  $('#email').val()},
                 success: function (response) {
                     $('#create_owner_form').get(0).reset();
                     alert("Owner  added");

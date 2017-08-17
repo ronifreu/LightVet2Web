@@ -22,5 +22,11 @@ var stringFormater = {
     dateStringToNiceString: function (date) {
         var date = new Date(date);
         return (date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
+    },
+    dateStringToNiceAge: function (date) {
+        var date = new Date(date);
+        var now = new Date(Date.now());
+        var datenow = (now.getFullYear() - date.getFullYear()) + "." + (now.getMonth() - date.getMonth())
+        return datenow;
     }
 }
