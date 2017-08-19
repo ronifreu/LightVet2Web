@@ -22,7 +22,7 @@ var ownerInfo = {
     },
 
     showOwner: function (owner) {
-        $('#owner_details').html("Name: " + owner.FirstName + " " + owner.LastName+"<br>Phone Number: " + owner.PhoneNumber+"<br>Address: " + owner.Address+"<br><br><br><br><br>");
+        $('#owner_details').html("Name: " + owner.FirstName + " " + owner.LastName+"<br>Phone Number: " + owner.PhoneNumber+"<br>Address: "+ owner.Address+" "+owner.City+ "<br><br><br><br><br>");
     }
 }
 
@@ -86,7 +86,8 @@ var addPet = {
                     "Color":  $('#color').val(),
                     "ChipIdentifier":  $('#chipNum').val(),
                     "Type":  $('#pet-type').val(),
-                    "Age":  $('#pet-age').val()},
+                    "Age":  $('#pet-age').val(),
+                    "Gender":  $('#pet-gender').val()},
                 success: function (response) {
                     petsInfo.init();
                     $('#add_pet_form').get(0).reset();

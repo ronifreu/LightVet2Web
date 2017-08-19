@@ -26,7 +26,13 @@ var stringFormater = {
     dateStringToNiceAge: function (date) {
         var date = new Date(date);
         var now = new Date(Date.now());
-        var datenow = (now.getFullYear() - date.getFullYear()) + "." + (now.getMonth() - date.getMonth())
+        var yearless = 0;
+        var month = (now.getMonth() - date.getMonth());
+        if (month < 0){
+            yearless = -1;
+            month += 12;
+        }
+        var datenow = (now.getFullYear() - date.getFullYear() + yearless) + "." + month;
         return datenow;
     }
 }

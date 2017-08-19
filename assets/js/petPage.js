@@ -209,6 +209,8 @@ var certificatesGenerator = {
             owner_phone : chosen_owner.PhoneNumber,
             owner_mail : chosen_owner.Mail,
             owner_id_num : chosen_owner.IdNumber,
+            owner_city : chosen_owner.City,
+            owner_address : chosen_owner.Address,
             dr_first_name : chosen_dr.FirstName,
             dr_last_name : chosen_dr.LastName,
             dr_license_num : chosen_dr.LicenseNum,
