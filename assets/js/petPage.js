@@ -1,5 +1,6 @@
 var serverAddress = 'http://localhost:9000';
 var appointmentsTemplatesList = [];
+var chosenMedicineDict = {}
 
 $(document).ready(function() {
     petInfo.init();
@@ -7,6 +8,7 @@ $(document).ready(function() {
     addAppointment.init();
     certificatesGenerator.init();
     templateDropDown.init();
+    searchMedicine.init();
 });
 
 var petInfo = {
@@ -218,5 +220,59 @@ var certificatesGenerator = {
             dr_address : chosen_dr.Address
         }
         return retval;
+    }
+}
+
+var searchMedicine =  {
+    init: function () {
+        $('#medicine_name_search').on('keyup', this.queryServer);
+        this.queryServer();
+    },
+    queryServer: function () {
+        console.log("searchMedicine queryServer call");
+        $.ajax(serverAddress+'/api/Appointment/GetMedicineTemplateByStartWithName',{
+            data: {"medicineName": $('#medicine_name_search').val()},
+
+            success: searchMedicine.showSearchRes,
+            error: function(request, errorType, errorMessage) {
+                console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
+                alert(request.responseText)
+            }
+        })
+    },
+    showSearchRes : function (response) {
+        console.log("searchMedicine showSearchRes call");
+        var rendered = "";
+        var template = '<li><a href="#" class="button {{classType}} small medicine_template_button" data-medicine_template_identifier="{{identifier}}">{{medicineName}} {{dosage}} {{mesurmentUnit}}</a></li>';
+
+        for (var key in chosenMedicineDict){
+            rendered = rendered + Mustache.render(template, {classType : "special",medicineName : chosenMedicineDict[key],dosage : "",mesurmentUnit : "",identifier : key});
+        }
+
+
+        response.forEach(function(el){
+            if (!(el.Identifier in chosenMedicineDict)) {
+                var chosenClass = el.identifier in chosenMedicineDict ? "special" : ""
+                rendered = rendered + Mustache.render(template, {
+                        classType: chosenClass,
+                        medicineName: el.Name,
+                        dosage: el.Dosage,
+                        mesurmentUnit: enumConverter.mesurmentUnit.fromNumToStr(el.MesurmentUnit),
+                        identifier: el.Identifier
+                    });
+            }
+        });
+        $('#medicine_template_list_search_block').html(rendered);
+        $(".medicine_template_button").on('click',function (event) {
+            event.preventDefault();
+            console.log($(this).data("medicine_template_identifier"));
+            console.log(chosenMedicineDict[$(this).data("medicine_template_identifier")])
+            $(this).toggleClass("special");
+            if($(this).data("medicine_template_identifier") in chosenMedicineDict)
+                delete chosenMedicineDict[$(this).data("medicine_template_identifier")]
+            else
+                chosenMedicineDict[$(this).data("medicine_template_identifier")] = $(this).html();
+
+        })
     }
 }

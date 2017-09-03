@@ -11,6 +11,16 @@ var enumConverter = {
             return this.values.indexOf(valueToConvert);
         },
         values : ["General","Periodic","Incident","GeneralSurgery"]
+    },
+
+    mesurmentUnit : {
+        fromNumToStr : function (valueToConvert) {
+            return this.values[valueToConvert];
+        },
+        fromStrToNum : function (valueToConvert) {
+            return this.values.indexOf(valueToConvert);
+        },
+        values : ["ml","mg"]
     }
 }
 
