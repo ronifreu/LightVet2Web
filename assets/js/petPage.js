@@ -1,6 +1,7 @@
 var serverAddress = 'http://localhost:9000';
 var appointmentsTemplatesList = [];
 var chosenMedicineDict = {}
+var medicineResposneDict = {}
 
 $(document).ready(function() {
     petInfo.init();
@@ -78,6 +79,9 @@ var addAppointment = {
     sendAddAppointmentForm: function (event) {
         event.preventDefault();
         console.log($('input[name="appointmentType"]:checked').data('val'));
+        var chosenMedicinesList = Object.keys(chosenMedicineDict).map(function(key){
+            return chosenMedicineDict[key];
+        });
         if($(this).valid()) {
             $.ajax(serverAddress + '/api/Appointment/AddAppointment', {
                 type: 'POST',
@@ -85,11 +89,9 @@ var addAppointment = {
                     "OwnerIdentifier": localStorage.getItem('owner_id'),
                     "PetIdentifier": localStorage.getItem('pet_id'),
                     "AppointmentTitle": $('#appointmentTitle').val(),
-                    "Identifier": "",
-                    "TimeCreated": "",
-                    "TimeModified": "",
                     "AppointmentSummery": $('#appointmentSummery').val(),
-                    "Type": $('input[name="appointmentType"]:checked').data('val')
+                    "Type": $('input[name="appointmentType"]:checked').data('val'),
+                    "MedicinesAsJson" : JSON.stringify(chosenMedicinesList)
                 },
                 success: function (response) {
                     appointmentInfo.init();
@@ -103,6 +105,8 @@ var addAppointment = {
             })
         }
     },
+
+
     initFormValidation : function () {
 
         $('#add_appointment_form').validate({
@@ -233,7 +237,13 @@ var searchMedicine =  {
         $.ajax(serverAddress+'/api/Appointment/GetMedicineTemplateByStartWithName',{
             data: {"medicineName": $('#medicine_name_search').val()},
 
-            success: searchMedicine.showSearchRes,
+            success: function (response) {
+                medicineResposneDict = {}
+                response.forEach(function(el){
+                    medicineResposneDict[el.Identifier] = el
+                });
+                searchMedicine.showSearchRes(response)
+            },
             error: function(request, errorType, errorMessage) {
                 console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
                 alert(request.responseText)
@@ -244,15 +254,15 @@ var searchMedicine =  {
         console.log("searchMedicine showSearchRes call");
         var rendered = "";
         var template = '<li><a href="#" class="button {{classType}} small medicine_template_button" data-medicine_template_identifier="{{identifier}}">{{medicineName}} {{dosage}} {{mesurmentUnit}}</a></li>';
-
+        console.log(chosenMedicineDict)
         for (var key in chosenMedicineDict){
-            rendered = rendered + Mustache.render(template, {classType : "special",medicineName : chosenMedicineDict[key],dosage : "",mesurmentUnit : "",identifier : key});
+            rendered = rendered + Mustache.render(template, {classType : "special",medicineName : chosenMedicineDict[key].Name,dosage : chosenMedicineDict[key].Dosage,mesurmentUnit : enumConverter.mesurmentUnit.fromNumToStr(chosenMedicineDict[key].MesurmentUnit),identifier : key});
         }
 
 
         response.forEach(function(el){
             if (!(el.Identifier in chosenMedicineDict)) {
-                var chosenClass = el.identifier in chosenMedicineDict ? "special" : ""
+                var chosenClass = el.Identifier in chosenMedicineDict ? "special" : ""
                 rendered = rendered + Mustache.render(template, {
                         classType: chosenClass,
                         medicineName: el.Name,
@@ -265,14 +275,15 @@ var searchMedicine =  {
         $('#medicine_template_list_search_block').html(rendered);
         $(".medicine_template_button").on('click',function (event) {
             event.preventDefault();
-            console.log($(this).data("medicine_template_identifier"));
-            console.log(chosenMedicineDict[$(this).data("medicine_template_identifier")])
-            $(this).toggleClass("special");
-            if($(this).data("medicine_template_identifier") in chosenMedicineDict)
-                delete chosenMedicineDict[$(this).data("medicine_template_identifier")]
-            else
-                chosenMedicineDict[$(this).data("medicine_template_identifier")] = $(this).html();
 
+            $(this).toggleClass("special");
+            if($(this).data("medicine_template_identifier") in chosenMedicineDict) {
+                delete chosenMedicineDict[$(this).data("medicine_template_identifier")]
+            }
+            else {
+                var selectedId = $(this).data("medicine_template_identifier")
+                chosenMedicineDict[selectedId] = medicineResposneDict[selectedId];
+            }
         })
     }
 }
