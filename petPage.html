@@ -79,20 +79,49 @@
 		<!-- Footer -->
 		<footer id="footer">
 			<div class="inner">
-				<section>
+				<section class="single">
 					<h2>Add Appointment</h2>
+					<div>
+						<div class="inline-search">Appointment Template:</div>
+						<select class="inline-search textDirRtl" name="appointment-template" class="textDir textDirRtl" id="appointment_template_picker">
+						<option value="no_template" selected="selected">LOADING TEMPLATES</option>
+					</select>
+					</div>
 					<form class="row uniform" method="post" action="#" id="add_appointment_form">
-						<div class="4u 12u$(small)">
-							<input type="radio" id="appointmentTypePeriodic" name="appointmentType" data-val="1" checked>
-							<label for="appointmentTypePeriodic">Periodic</label>
+
+						<div class="field">
+							<div class="vertical-list-item">Appointment Type:</div>
+
+							<div class="4u 12u$(small) vertical-list-item">
+								<input type="radio" id="appointmentTypePeriodic" name="appointmentType" data-val="1" checked>
+								<label for="appointmentTypePeriodic">Periodic</label>
+							</div>
+							<div class="4u 12u$(small) vertical-list-item">
+								<input type="radio" id="appointmentTypeIncident" name="appointmentType" data-val="2">
+								<label for="appointmentTypeIncident">Incident</label>
+							</div>
 						</div>
-						<div class="4u 12u$(small)">
-							<input type="radio" id="appointmentTypeIncident" name="appointmentType" data-val="2">
-							<label for="appointmentTypeIncident">Incident</label>
+						<div class="field">
+							<div class="vertical-list-item">Parameters check:</div>
+							<div class="6u 12u$(small) vertical-list-item">
+								<input type="checkbox" id="heart-lungs" name="Heart Lungs">
+								<label for="heart-lungs">Heart Lungs</label>
+							</div>
+							<div class="6u 12u$(small) vertical-list-item">
+								<input type="checkbox" id="body-temp" name="Body Temperature">
+								<label for="body-temp">Body Temperature</label>
+							</div>
+							<div class="6u 12u$(small) vertical-list-item">
+								<input type="checkbox" id="ears-eyes" name="Ears">
+								<label for="ears-eyes">Ears</label>
+							</div>
+							<div class="6u 12u$(small) vertical-list-item">
+								<input type="checkbox" id="mouth" name="Mouth">
+								<label for="mouth">Mouth</label>
+							</div>
 						</div>
-						<!--<div class="field">-->
-							<!--<input type="text" name="color" id="color" placeholder="Color" />-->
-						<!--</div>-->
+
+
 						<div class="field">
 							<input type="text" name="appointmentTitle" id="appointmentTitle" class="textDir textDirRtl" placeholder="Appointment Title" />
 						</div>
@@ -100,15 +129,27 @@
 							<textarea name="appointmentSummery" id="appointmentSummery" class="textDir textDirRtl" placeholder="Appointment Summery"></textarea>
 						</div>
 						<div class="field">
-							<div class="textDirRtl">Medicine given</div>
-							<ul class="actions small" id="medicine_template_list_search_block">
+							<!--<a href="#chose_medicine_pop" class="button special small" onclick="">Add medicines</a>-->
+							<h3 class="inline-search">Medicines given:</h3>
+							<input type="text" id="medicine_name_search" class="inline-search">
+							<ul class="actions small" id="medicine_template_list_chosen_block">
 								<li><a href="#" class="button special small medicine_template_button">LOADING LIST</a></li>
 							</ul>
 						</div>
 						<div class="field">
-							<div class="textDirRtl">After treatment given</div>
-							<ul class="actions small" id="after_treatment_template_list_search_block">
-								<li><a href="#" class="button special small medicine_template_button">LOADING LIST</a></li>
+							<h3 class="inline-search">Prescriptions given:</h3>
+							<input type="text" id="prescription_search" class="inline-search">
+							<ul class="actions small" id="prescription_template_list_search_block">
+								<li><a href="#" class="button special small medicine_template_button">Pinitzilin 200 ML</a></li>
+								<li><a href="#" class="button special small medicine_template_button">Ogmentin 100 ML</a></li>
+							</ul>
+						</div>
+						<div class="field">
+							<h3 class="inline-search">Recommendations given:</h3>
+							<input type="text" id="recommendation_search" class="inline-search">
+							<ul class="actions small" id="recommendations_list_search_block">
+								<li><a href="#" class="button special small medicine_template_button">צום של 24 שעות ולאחר מכן אוכל יבש בלבד</a></li>
+								<li><a href="#" class="button special small medicine_template_button">לא לצאת לרוץ בשעות החום</a></li>
 							</ul>
 						</div>
 						<ul class="actions">
@@ -116,15 +157,15 @@
 						</ul>
 					</form>
 				</section>
-				<section>
-					<h2>Appointment Template:</h2>
-					<select name="appointment-template" class="textDir textDirRtl" id="appointment_template_picker">
-						<option value="no_template" selected="selected">LOADING TEMPLATES</option>
-					</select>
-					<h3>Medicine name search</h3>
-					<input type="text" id="medicine_name_search"><br>
+				<!--<section>-->
+					<!--<h2>Appointment Template:</h2>-->
+					<!--<select name="appointment-template" class="textDir textDirRtl" id="appointment_template_picker">-->
+						<!--<option value="no_template" selected="selected">LOADING TEMPLATES</option>-->
+					<!--</select>-->
+					<!--<h3>Medicine name search</h3>-->
+					<!--<input type="text" id="medicine_name_search"><br>-->
 
-				</section>
+				<!--</section>-->
 				<ul class="copyright">
 					<li>&copy; Freudenthal. All rights reserved</li>
 				</ul>
@@ -147,6 +188,24 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Medicine modal -->
+	<!--<div id="chose_medicine_pop" class="overlay light ">-->
+		<!--<a class="cancel" href="#"></a>-->
+		<!--<div class="popup fullpage">-->
+			<!--<h3>Add medicine</h3>-->
+			<!--<div class="content">-->
+				<!--<h3>Search:</h3>-->
+				<!--<input type="text" id="medicine_name_search"><br>-->
+				<!--<div class="field">-->
+					<!--<div>Medicine given</div>-->
+					<!--<ul class="actions small" id="medicine_template_list_search_block">-->
+						<!--<li><a href="#" class="button special small medicine_template_button">LOADING LIST</a></li>-->
+					<!--</ul>-->
+				<!--</div>-->
+			<!--</div>-->
+		<!--</div>-->
+	<!--</div>-->
 
 	<img id="image" >
 	<div  id="divon" class="hide-all" style="size: 21cm 29.7cm;margin: 30mm 45mm 30mm 45mm;padding: 0mm 45mm 0mm 0mm;background-color: #ffffff;"></div>

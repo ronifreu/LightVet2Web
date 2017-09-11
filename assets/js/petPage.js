@@ -10,6 +10,19 @@ $(document).ready(function() {
     certificatesGenerator.init();
     templateDropDown.init();
     searchMedicine.init();
+
+    $(document).ready(function() {
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                console.log(event.target.id)
+                if(event.target.id == "medicine_name_search"){
+                    console.log("YEAH")
+                }
+                return false;
+            }
+        });
+    });
 });
 
 var petInfo = {
@@ -272,7 +285,8 @@ var searchMedicine =  {
                     });
             }
         });
-        $('#medicine_template_list_search_block').html(rendered);
+        //$('#medicine_template_list_search_block').html(rendered);
+        $('#medicine_template_list_chosen_block').html(rendered);
         $(".medicine_template_button").on('click',function (event) {
             event.preventDefault();
 
