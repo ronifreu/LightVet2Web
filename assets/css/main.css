@@ -1686,3 +1686,14 @@ section.single > div:first-of-type {
 	display: inline;
 	margin-right: 5px;
 }
+
+.form-label {
+	position: absolute;
+}
+
+.medicine_template_button, .prescription_template_button {
+	font: 20px Arial;
+	line-height: 300%;
+	letter-spacing: 1px !important;
+	font-size: medium !important;
+}

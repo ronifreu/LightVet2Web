@@ -2,6 +2,8 @@ var serverAddress = 'http://localhost:9000';
 var appointmentsTemplatesList = [];
 var chosenMedicineDict = {}
 var medicineResposneDict = {}
+var chosenPrescriptionDict = {}
+var PrescriptionResposneDict = {}
 
 $(document).ready(function() {
     petInfo.init();
@@ -10,6 +12,8 @@ $(document).ready(function() {
     certificatesGenerator.init();
     templateDropDown.init();
     searchMedicine.init();
+    searchPrescription.init();
+
 
     $(document).ready(function() {
         $(window).keydown(function(event){
@@ -17,7 +21,8 @@ $(document).ready(function() {
                 event.preventDefault();
                 console.log(event.target.id)
                 if(event.target.id == "medicine_name_search"){
-                    console.log("YEAH")
+                    $( "#medicine_name_search" ).trigger("target");
+                    console.log("open add medicine modal")
                 }
                 return false;
             }
@@ -95,6 +100,10 @@ var addAppointment = {
         var chosenMedicinesList = Object.keys(chosenMedicineDict).map(function(key){
             return chosenMedicineDict[key];
         });
+        var chosenPrescriptionList = Object.keys(chosenPrescriptionDict).map(function(key){
+            return chosenPrescriptionDict[key];
+        });
+
         if($(this).valid()) {
             $.ajax(serverAddress + '/api/Appointment/AddAppointment', {
                 type: 'POST',
@@ -104,7 +113,13 @@ var addAppointment = {
                     "AppointmentTitle": $('#appointmentTitle').val(),
                     "AppointmentSummery": $('#appointmentSummery').val(),
                     "Type": $('input[name="appointmentType"]:checked').data('val'),
-                    "MedicinesAsJson" : JSON.stringify(chosenMedicinesList)
+                    "MedicinesAsJson" : JSON.stringify(chosenMedicinesList),
+                    "AfterTreatmentsAsJson" : JSON.stringify(chosenPrescriptionList),
+                    "IsHeartLungsGood" : $('#heart-lungs').is(':checked'),
+                    "IsBodyTempratureGood" : $('#body-temp').is(':checked'),
+                    "IsEarsGood" : $('#ears').is(':checked'),
+                    "IsMouthGood" : $('#mouth').is(':checked'),
+                    "IsEyesGood" : $('#eyes').is(':checked')
                 },
                 success: function (response) {
                     appointmentInfo.init();
@@ -248,7 +263,8 @@ var searchMedicine =  {
     queryServer: function () {
         console.log("searchMedicine queryServer call");
         $.ajax(serverAddress+'/api/Appointment/GetMedicineTemplateByStartWithName',{
-            data: {"medicineName": $('#medicine_name_search').val()},
+            data: {"medicineName": $('#medicine_name_search').val(),
+                    "applier" : 1},
 
             success: function (response) {
                 medicineResposneDict = {}
@@ -275,9 +291,8 @@ var searchMedicine =  {
 
         response.forEach(function(el){
             if (!(el.Identifier in chosenMedicineDict)) {
-                var chosenClass = el.Identifier in chosenMedicineDict ? "special" : ""
                 rendered = rendered + Mustache.render(template, {
-                        classType: chosenClass,
+                        classType: "",
                         medicineName: el.Name,
                         dosage: el.Dosage,
                         mesurmentUnit: enumConverter.mesurmentUnit.fromNumToStr(el.MesurmentUnit),
@@ -285,7 +300,6 @@ var searchMedicine =  {
                     });
             }
         });
-        //$('#medicine_template_list_search_block').html(rendered);
         $('#medicine_template_list_chosen_block').html(rendered);
         $(".medicine_template_button").on('click',function (event) {
             event.preventDefault();
@@ -297,6 +311,67 @@ var searchMedicine =  {
             else {
                 var selectedId = $(this).data("medicine_template_identifier")
                 chosenMedicineDict[selectedId] = medicineResposneDict[selectedId];
+            }
+        })
+    }
+}
+
+var searchPrescription =  {
+    init: function () {
+        $('#prescription_search').on('keyup', this.queryServer);
+        this.queryServer();
+    },
+    queryServer: function () {
+        console.log("searchPrescription queryServer call");
+        $.ajax(serverAddress+'/api/Appointment/GetMedicineTemplateByStartWithName',{
+            data: {"medicineName": $('#prescription_search').val(),
+                "applier" : 2},
+
+            success: function (response) {
+                PrescriptionResposneDict = {}
+                response.forEach(function(el){
+                    PrescriptionResposneDict[el.Identifier] = el
+                });
+                searchPrescription.showSearchRes(response)
+            },
+            error: function(request, errorType, errorMessage) {
+                console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
+                alert(request.responseText)
+            }
+        })
+    },
+    showSearchRes : function (response) {
+        console.log("searchPrescription showSearchRes call");
+        var rendered = "";
+        var template = '<li><a href="#" class="button {{classType}} small prescription_template_button" data-medicine_template_identifier="{{identifier}}">{{medicineName}} {{dosage}} {{mesurmentUnit}}</a></li>';
+        console.log(chosenPrescriptionDict)
+        for (var key in chosenPrescriptionDict){
+            rendered = rendered + Mustache.render(template, {classType : "special",medicineName : chosenPrescriptionDict[key].Name,dosage : chosenPrescriptionDict[key].Dosage,mesurmentUnit : enumConverter.mesurmentUnit.fromNumToStr(chosenPrescriptionDict[key].MesurmentUnit),identifier : key});
+        }
+
+
+        response.forEach(function(el){
+            if (!(el.Identifier in chosenPrescriptionDict)) {
+                rendered = rendered + Mustache.render(template, {
+                        classType: "",
+                        medicineName: el.Name,
+                        dosage: el.Dosage,
+                        mesurmentUnit: enumConverter.mesurmentUnit.fromNumToStr(el.MesurmentUnit),
+                        identifier: el.Identifier
+                    });
+            }
+        });
+        $('#prescription_template_list_chosen_block').html(rendered);
+        $(".prescription_template_button").on('click',function (event) {
+            event.preventDefault();
+
+            $(this).toggleClass("special");
+            if($(this).data("medicine_template_identifier") in chosenPrescriptionDict) {
+                delete chosenPrescriptionDict[$(this).data("medicine_template_identifier")]
+            }
+            else {
+                var selectedId = $(this).data("medicine_template_identifier")
+                chosenPrescriptionDict[selectedId] = PrescriptionResposneDict[selectedId];
             }
         })
     }

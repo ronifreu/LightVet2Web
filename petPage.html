@@ -112,8 +112,12 @@
 								<label for="body-temp">Body Temperature</label>
 							</div>
 							<div class="6u 12u$(small) vertical-list-item">
-								<input type="checkbox" id="ears-eyes" name="Ears">
-								<label for="ears-eyes">Ears</label>
+								<input type="checkbox" id="ears" name="Ears">
+								<label for="ears">Ears</label>
+							</div>
+							<div class="6u 12u$(small) vertical-list-item">
+								<input type="checkbox" id="eyes" name="Eyes">
+								<label for="eyes">Eyes</label>
 							</div>
 							<div class="6u 12u$(small) vertical-list-item">
 								<input type="checkbox" id="mouth" name="Mouth">
@@ -123,10 +127,19 @@
 
 
 						<div class="field">
-							<input type="text" name="appointmentTitle" id="appointmentTitle" class="textDir textDirRtl" placeholder="Appointment Title" />
+							<label class='form-label textDirRtl' for='appointmentTitle'>Appointment Title</label>
+							<input type="text" name="appointmentTitle" id="appointmentTitle" class="textDir textDirRtl" placeholder="לחץ כדי להכניס את כותרת הפגישה" />
 						</div>
 						<div class="field">
-							<textarea name="appointmentSummery" id="appointmentSummery" class="textDir textDirRtl" placeholder="Appointment Summery"></textarea>
+							<label class='form-label textDirRtl' for='appointmentSummery'>Appointment Summery</label>
+							<textarea name="appointmentSummery" id="appointmentSummery" class="textDir textDirRtl" placeholder="לחץ כדי להכניס את סיכום הפגישה"></textarea>
+						</div>
+						<div class="field">
+							<h3 class="inline-search">Diagnosis given:</h3>
+							<input type="text" id="diagnosis_search" class="inline-search">
+							<ul class="actions small" id="diagnosis_template_list_search_block">
+								<li><a href="#" class="button special small medicine_template_button">זיהום חמור בפה</a></li>
+							</ul>
 						</div>
 						<div class="field">
 							<!--<a href="#chose_medicine_pop" class="button special small" onclick="">Add medicines</a>-->
@@ -139,7 +152,7 @@
 						<div class="field">
 							<h3 class="inline-search">Prescriptions given:</h3>
 							<input type="text" id="prescription_search" class="inline-search">
-							<ul class="actions small" id="prescription_template_list_search_block">
+							<ul class="actions small" id="prescription_template_list_chosen_block">
 								<li><a href="#" class="button special small medicine_template_button">Pinitzilin 200 ML</a></li>
 								<li><a href="#" class="button special small medicine_template_button">Ogmentin 100 ML</a></li>
 							</ul>
@@ -157,15 +170,6 @@
 						</ul>
 					</form>
 				</section>
-				<!--<section>-->
-					<!--<h2>Appointment Template:</h2>-->
-					<!--<select name="appointment-template" class="textDir textDirRtl" id="appointment_template_picker">-->
-						<!--<option value="no_template" selected="selected">LOADING TEMPLATES</option>-->
-					<!--</select>-->
-					<!--<h3>Medicine name search</h3>-->
-					<!--<input type="text" id="medicine_name_search"><br>-->
-
-				<!--</section>-->
 				<ul class="copyright">
 					<li>&copy; Freudenthal. All rights reserved</li>
 				</ul>
@@ -177,35 +181,31 @@
 
 	<!-- Certificates modal -->
 	<div id="chose_certificate_pop" class="overlay light">
+	<a class="cancel" href="#"></a>
+	<div class="popup">
+		<h3>Chose Certificate</h3>
+		<div class="content">
+			<ul class="actions">
+				<li><a class="button special certificate-item" data-cert_type="castration">Castration</a></li>
+				<li><a class="button special certificate-item" data-cert_type="flight">Flight</a></li>
+			</ul>
+		</div>
+	</div>
+	</div>
+
+	<div id="add_medisine_pop" class="overlay light">
 		<a class="cancel" href="#"></a>
 		<div class="popup">
-			<h3>Chose Certificate</h3>
+			<h3>Add medicine</h3>
 			<div class="content">
 				<ul class="actions">
-					<li><a class="button special certificate-item" data-cert_type="castration">Castration</a></li>
-					<li><a class="button special certificate-item" data-cert_type="flight">Flight</a></li>
+					<h3 class="inline-search">Dosage:</h3>
+					<input type="text"  class="inline-search">
 				</ul>
 			</div>
 		</div>
 	</div>
 
-	<!-- Medicine modal -->
-	<!--<div id="chose_medicine_pop" class="overlay light ">-->
-		<!--<a class="cancel" href="#"></a>-->
-		<!--<div class="popup fullpage">-->
-			<!--<h3>Add medicine</h3>-->
-			<!--<div class="content">-->
-				<!--<h3>Search:</h3>-->
-				<!--<input type="text" id="medicine_name_search"><br>-->
-				<!--<div class="field">-->
-					<!--<div>Medicine given</div>-->
-					<!--<ul class="actions small" id="medicine_template_list_search_block">-->
-						<!--<li><a href="#" class="button special small medicine_template_button">LOADING LIST</a></li>-->
-					<!--</ul>-->
-				<!--</div>-->
-			<!--</div>-->
-		<!--</div>-->
-	<!--</div>-->
 
 	<img id="image" >
 	<div  id="divon" class="hide-all" style="size: 21cm 29.7cm;margin: 30mm 45mm 30mm 45mm;padding: 0mm 45mm 0mm 0mm;background-color: #ffffff;"></div>
