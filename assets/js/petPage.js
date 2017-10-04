@@ -4,6 +4,8 @@ var chosenMedicineDict = {}
 var medicineResposneDict = {}
 var chosenPrescriptionDict = {}
 var PrescriptionResposneDict = {}
+var RecommendationResposneDict = {}
+var chosenRecommendationDict = {}
 
 $(document).ready(function() {
     petInfo.init();
@@ -13,6 +15,7 @@ $(document).ready(function() {
     templateDropDown.init();
     searchMedicine.init();
     searchPrescription.init();
+    searchRecommendation.init();
 
 
     $(document).ready(function() {
@@ -264,7 +267,7 @@ var searchMedicine =  {
         console.log("searchMedicine queryServer call");
         $.ajax(serverAddress+'/api/Appointment/GetMedicineTemplateByStartWithName',{
             data: {"medicineName": $('#medicine_name_search').val(),
-                    "applier" : 1},
+                    "TreatmentEntryType" : 1},
 
             success: function (response) {
                 medicineResposneDict = {}
@@ -325,7 +328,7 @@ var searchPrescription =  {
         console.log("searchPrescription queryServer call");
         $.ajax(serverAddress+'/api/Appointment/GetMedicineTemplateByStartWithName',{
             data: {"medicineName": $('#prescription_search').val(),
-                "applier" : 2},
+                "TreatmentEntryType" : 2},
 
             success: function (response) {
                 PrescriptionResposneDict = {}
@@ -372,6 +375,67 @@ var searchPrescription =  {
             else {
                 var selectedId = $(this).data("medicine_template_identifier")
                 chosenPrescriptionDict[selectedId] = PrescriptionResposneDict[selectedId];
+            }
+        })
+    }
+}
+
+var searchRecommendation =  {
+    init: function () {
+        $('#recommendation_search').on('keyup', this.queryServer);
+        this.queryServer();
+    },
+    queryServer: function () {
+        console.log("searchRecommendation queryServer call");
+        $.ajax(serverAddress+'/api/Appointment/GetMedicineTemplateByStartWithName',{
+            data: {"medicineName": $('#recommendation_search').val(),
+                "TreatmentEntryType" : 3},
+
+            success: function (response) {
+                RecommendationResposneDict = {}
+                response.forEach(function(el){
+                    RecommendationResposneDict[el.Identifier] = el
+                });
+                searchRecommendation.showSearchRes(response)
+            },
+            error: function(request, errorType, errorMessage) {
+                console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
+                alert(request.responseText)
+            }
+        })
+    },
+    showSearchRes : function (response) {
+        console.log("searchRecommendation showSearchRes call");
+        var rendered = "";
+        var template = '<li><a href="#" class="button {{classType}} small recommendation_template_button" data-medicine_template_identifier="{{identifier}}">{{medicineName}}</a></li>';
+        console.log(chosenRecommendationDict)
+        for (var key in chosenRecommendationDict){
+            rendered = rendered + Mustache.render(template, {classType : "special",medicineName : chosenRecommendationDict[key].Name,dosage : chosenRecommendationDict[key].Dosage,mesurmentUnit : enumConverter.mesurmentUnit.fromNumToStr(chosenRecommendationDict[key].MesurmentUnit),identifier : key});
+        }
+
+
+        response.forEach(function(el){
+            if (!(el.Identifier in chosenRecommendationDict)) {
+                rendered = rendered + Mustache.render(template, {
+                        classType: "",
+                        medicineName: el.Name,
+                        dosage: el.Dosage,
+                        mesurmentUnit: enumConverter.mesurmentUnit.fromNumToStr(el.MesurmentUnit),
+                        identifier: el.Identifier
+                    });
+            }
+        });
+        $('#recommendations_list_search_block').html(rendered);
+        $(".recommendation_template_button").on('click',function (event) {
+            event.preventDefault();
+
+            $(this).toggleClass("special");
+            if($(this).data("medicine_template_identifier") in chosenRecommendationDict) {
+                delete chosenRecommendationDict[$(this).data("medicine_template_identifier")]
+            }
+            else {
+                var selectedId = $(this).data("medicine_template_identifier")
+                chosenRecommendationDict[selectedId] = RecommendationResposneDict[selectedId];
             }
         })
     }
