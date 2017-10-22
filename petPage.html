@@ -193,15 +193,22 @@
 	</div>
 	</div>
 
-	<div id="add_medisine_pop" class="overlay light">
+	<div id="add_medicine_pop" class="overlay light">
 		<a class="cancel" href="#"></a>
 		<div class="popup">
 			<h3>Add medicine</h3>
 			<div class="content">
 				<ul class="actions">
-					<h3 class="inline-search">Dosage:</h3>
-					<input type="text"  class="inline-search">
+					<li><h3 class="inline-search">Dosage:</h3>
+					<input type="number"  class="inline-search"></li>
+					<li><h3 class="inline-search">Units:</h3>
+					<select>
+						<option value="" selected="selected"></option>
+						<option value="0">ml</option>
+						<option value="1">mg</option>
+					</select></li>
 				</ul>
+				<a class="button special" onclick="searchMedicine.addMedicine()">Done</a>
 			</div>
 		</div>
 	</div>

@@ -1657,6 +1657,14 @@
 	margin: 0;
 }
 
+.popup ul.actions li{
+	display: block;
+}
+.popup ul.actions li select{
+	width:50%;
+	display: inline-block;
+}
+
 #footer > .inner section:nth-child(1).single {
 	width: calc(100% - 2.5em);
 }
@@ -1691,7 +1699,7 @@ section.single > div:first-of-type {
 	position: absolute;
 }
 
-.medicine_template_button, .prescription_template_button {
+.medicine_template_button, .prescription_template_button, .recommendation_template_button, .diagnosis_template_button {
 	font: 20px Arial;
 	line-height: 300%;
 	letter-spacing: 1px !important;
