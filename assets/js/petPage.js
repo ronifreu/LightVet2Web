@@ -8,6 +8,9 @@ var RecommendationResposneDict = {}
 var chosenRecommendationDict = {}
 var DiagnosisResposneDict = {}
 var chosenDiagnosisDict = {}
+var importantProceduresTemplatesDict = {}
+var importantProceduresDict = {}
+var chosenImportantProceduresDict = {}
 
 $(document).ready(function() {
     petInfo.init();
@@ -19,7 +22,8 @@ $(document).ready(function() {
     searchPrescription.init();
     searchRecommendation.init();
     searchDiagnosis.init();
-
+    importantProcedureInfo.init();
+    document.getElementById("appointmentDate").valueAsDate  = new Date();
 
     $(document).ready(function() {
         $(window).keydown(function(event){
@@ -28,6 +32,19 @@ $(document).ready(function() {
                 console.log(event.target.id)
                 if(event.target.id == "medicine_name_search"){
                     location.href = '#add_medicine_pop';
+                    $('#new-medicine-name').html($('#medicine_name_search').val());
+                }
+                if(event.target.id == "prescription_search"){
+                    location.href = '#add_prescription_pop';
+                    $('#new-prescription-name').html($('#prescription_search').val());
+                }
+                if(event.target.id == "recommendation_search"){
+                    location.href = '#add_recommendation_pop';
+                    $('#new-recommendation-name').html($('#recommendation_search').val());
+                }
+                if(event.target.id == "diagnosis_search"){
+                    location.href = '#add_diagnosis_pop';
+                    $('#new-diagnosis-name').html($('#diagnosis_search').val());
                 }
                 return false;
             }
@@ -89,9 +106,83 @@ var appointmentInfo = {
         $('.appointment_row').on('click', function () {
             $(this).next().slideToggle(10);
         })
+    }
+
+
+}
+
+var importantProcedureInfo = {
+    init : function(){
+        $.ajax(serverAddress+'/api/Appointment/GetImportantProcedureTemplatesForPetId',{
+            data: {"petIdentifier": localStorage.getItem('pet_id')},
+            success: function (response) {
+                $.ajax(serverAddress+'/api/Appointment/GetImportantProceduresForPetId',{
+                    data: {"petIdentifier": localStorage.getItem('pet_id')},
+                    success: function (response) {
+                        importantProcedureInfo.saveImportantProcedures(response);
+                        importantProcedureInfo.showImportantProcedures();
+                    },
+                    error: function(request, errorType, errorMessage) {
+                        console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
+                        alert(request.responseText)
+                    }
+                })
+                importantProcedureInfo.saveImportantProcedureTemplates(response);
+            },
+            error: function(request, errorType, errorMessage) {
+                console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
+                alert(request.responseText)
+            }
+        })
+    },
+    applyProcedure: function () {
+        var uuid = "guid" + new Date().getTime();
+        chosenImportantProceduresDict[$('#important_procedure_name').val()] = {
+            Identifier : uuid,
+            Name : $('#important_procedure_name').val(),
+            MedicalIdentifierType : 0,
+            MedicalIdentifier : $('#new-medicine-unit').val(),
+            ImportantProcedureType : 0,
+            "ActualDate" : $('#appointmentDate').val()
+        }
+        importantProceduresDict[$('#important_procedure_name').val()] = {
+            Name : $('#important_procedure_name').val()
+        }
+        importantProcedureInfo.showImportantProcedures();
+        location.href = '#';
+        alert("Procedure "+ $('#important_procedure_name').val() +" successfully registrated for this appointment");
+    },
+    saveImportantProcedureTemplates: function (appointments) {
+        appointments.forEach(function(el){
+            importantProceduresTemplatesDict[el.Name]=el;
+        });
+    },
+    saveImportantProcedures: function (appointments) {
+        appointments.forEach(function(el){
+            importantProceduresDict[el.Name]=el;
+        });
+    },
+    showImportantProcedures : function () {
+        console.log("showImportantProcedures call");
+        console.log(importantProceduresDict);
+        var rendered = "";
+        var template = '<div class="important_procedure_item {{classType}}">{{Name}}</div>';
+        for (var key in importantProceduresTemplatesDict){
+            class_type = key in importantProceduresDict ? "good" : "bad";
+            class_type = key in chosenImportantProceduresDict ? "edited" : class_type;
+            rendered = rendered + Mustache.render(template, {Name : importantProceduresTemplatesDict[key].Name,classType : class_type});
+        }
+
+        $('#important_procedures_block').html(rendered);
+        this.importantProcedureItemBehavior();
     },
 
-
+    importantProcedureItemBehavior : function () {
+        $('.important_procedure_item').on('click', function () {
+            location.href = '#apply_important_procedure_pop';
+            $('#important_procedure_name').val($(this).html());
+        })
+    }
 }
 
 var addAppointment = {
@@ -101,19 +192,24 @@ var addAppointment = {
     },
     sendAddAppointmentForm: function (event) {
         event.preventDefault();
-        console.log($('input[name="appointmentType"]:checked').data('val'));
-        var chosenMedicinesList = Object.keys(chosenMedicineDict).map(function(key){
+        var chosenMedicinesList = $.merge(Object.keys(chosenMedicineDict).map(function(key){
             return chosenMedicineDict[key];
-        });
-        var chosenPrescriptionList = Object.keys(chosenPrescriptionDict).map(function(key){
+        }),Object.keys(chosenPrescriptionDict).map(function(key){
             return chosenPrescriptionDict[key];
-        });
+        }));
+
+        chosenMedicinesList = $.merge(Object.keys(chosenRecommendationDict).map(function(key){
+            return chosenRecommendationDict[key];
+        }),chosenMedicinesList);
+
         var chosenDiagnosisList = Object.keys(chosenDiagnosisDict).map(function(key){
             return chosenDiagnosisDict[key];
         });
-        // var chosenRecommendationList = Object.keys(chosenRecommendationDict).map(function(key){
-        //     return chosenRecommendationDict[key];
-        // });
+
+        var chosenImportantProceduresList = Object.keys(chosenImportantProceduresDict).map(function(key){
+            return chosenImportantProceduresDict[key];
+        });
+
 
         if($(this).valid()) {
             $.ajax(serverAddress + '/api/Appointment/AddAppointment', {
@@ -125,18 +221,19 @@ var addAppointment = {
                     "AppointmentSummery": $('#appointmentSummery').val(),
                     "Type": $('input[name="appointmentType"]:checked').data('val'),
                     "MedicinesAsJson" : JSON.stringify(chosenMedicinesList),
-                    "AfterTreatmentsAsJson" : JSON.stringify(chosenPrescriptionList),
                     "DiagnosisAsJson" : JSON.stringify(chosenDiagnosisList),
-                    // "RecommendationsAsJson" : JSON.stringify(chosenRecommendationList),
+                    "ImportantProceduresAsJson" : JSON.stringify(chosenImportantProceduresList),
                     "IsHeartLungsGood" : $('#heart-lungs').is(':checked'),
                     "IsBodyTempratureGood" : $('#body-temp').is(':checked'),
                     "IsEarsGood" : $('#ears').is(':checked'),
                     "IsMouthGood" : $('#mouth').is(':checked'),
-                    "IsEyesGood" : $('#eyes').is(':checked')
+                    "IsEyesGood" : $('#eyes').is(':checked'),
+                    "ActualDate" : $('#appointmentDate').val()
                 },
                 success: function (response) {
                     appointmentInfo.init();
                     $('#add_appointment_form').get(0).reset();
+                    document.getElementById("appointmentDate").valueAsDate  = new Date();
                     alert("Appointment  added");
                 },
                 error: function (request, errorType, errorMessage) {
@@ -274,16 +371,16 @@ var searchMedicine =  {
         this.queryServer();
     },
     addMedicine: function () {
-        var uuid = "asdasd";
+        var uuid = "guid" + new Date().getTime();
         chosenMedicineDict[uuid] = {
             Identifier : uuid,
-            Name : "asd",
-            Dosage : "44",
-            MesurmentUnit : 0,
-            DailyFrequency : 1,
-            TreatmentEntryType : 0
+            Name : $('#medicine_name_search').val(),
+            Dosage : $('#new-medicine-dosage').val(),
+            MesurmentUnit : $('#new-medicine-unit').val(),
+            TreatmentEntryType : 1
         }
         searchMedicine.showSearchRes();
+        location.href = '#add_appointment_form';
     },
     queryServer: function () {
         console.log("searchMedicine queryServer call");
@@ -346,6 +443,19 @@ var searchPrescription =  {
     init: function () {
         $('#prescription_search').on('keyup', this.queryServer);
         this.queryServer();
+    },
+    addPrescription: function () {
+        var uuid = "guid" + new Date().getTime();
+        chosenPrescriptionDict[uuid] = {
+            Identifier : uuid,
+            Name : $('#prescription_search').val(),
+            Dosage : $('#new-prescription-dosage').val(),
+            MesurmentUnit : $('#new-prescription-unit').val(),
+            DailyFrequency : $('#new-prescription-frequency').val(),
+            TreatmentEntryType : 2
+        }
+        searchPrescription.showSearchRes();
+        location.href = '#add_appointment_form';
     },
     queryServer: function () {
         console.log("searchPrescription queryServer call");
@@ -428,6 +538,17 @@ var searchRecommendation =  {
             }
         })
     },
+    addRecommendation: function () {
+        var uuid = "guid" + new Date().getTime();
+        chosenRecommendationDict[uuid] = {
+            Identifier : uuid,
+            Name : $('#recommendation_search').val(),
+            DailyFrequency : $('#new-recommendation-frequency').val(),
+            TreatmentEntryType : 3
+        }
+        searchRecommendation.showSearchRes();
+        location.href = '#add_appointment_form';
+    },
     showSearchRes : function (response) {
         console.log("searchRecommendation showSearchRes call");
         var rendered = "";
@@ -489,6 +610,16 @@ var searchDiagnosis =  {
                 alert(request.responseText)
             }
         })
+    },
+    addDiagnosis: function () {
+        var uuid = "guid" + new Date().getTime();
+        chosenDiagnosisDict[uuid] = {
+            Identifier : uuid,
+            Name : $('#diagnosis_search').val(),
+            Severity : $('#new-diagnosis-severity').val(),
+        }
+        searchDiagnosis.showSearchRes();
+        location.href = '#add_appointment_form';
     },
     showSearchRes : function (response) {
         console.log("searchDiagnosis showSearchRes call");

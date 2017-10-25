@@ -50,13 +50,21 @@
 
 
 			<div class="inner">
-				<div><p><span class="image left"><img src="images/dogSample.jpg" alt="" /></span><h1 class="smalltitle" id="pet_details"></h1></p></div>
+				<div>
+					<p>
+						<span class="image left">
+							<img src="images/dogSample.jpg" alt="" />
+						</span>
+					<h1 class="smalltitle" id="pet_details"></h1>
+					<div id="important_procedures_block">
+						<div class="important_procedure_item">LOADING IMPORTANT PROCEDURE FROM SERVER</div>
+					</div>
+					</p>
+				</div>
 				<ul class="actions">
 					<li><a href="#add_appointment_form" class="button special" id="add_appointment_button">Add Appointment</a></li>
 					<li><a href="#chose_certificate_pop" class="button special" id="generate_certificate_button">Generate Certificate</a></li>
 				</ul>
-				<!--<span class="image main"><img src="images/pic13.jpg" alt="" /></span>-->
-				<!--<h3>Appointments List:</h3>-->
 				<div class="table-wrapper">
 					<table class="alt">
 						<thead>
@@ -89,6 +97,13 @@
 					</div>
 					<form class="row uniform" method="post" action="#" id="add_appointment_form">
 
+						<div class="field">
+							<div class="vertical-list-item">Appointment Date:</div>
+
+							<div class="4u 12u$(small) vertical-list-item">
+								<input type="date" id="appointmentDate" name="appointmentDate">
+							</div>
+						</div>
 						<div class="field">
 							<div class="vertical-list-item">Appointment Type:</div>
 
@@ -193,26 +208,131 @@
 	</div>
 	</div>
 
+	<!-- Add medicine modal -->
 	<div id="add_medicine_pop" class="overlay light">
 		<a class="cancel" href="#"></a>
 		<div class="popup">
 			<h3>Add medicine</h3>
 			<div class="content">
 				<ul class="actions">
+					<li>
+						<h3>Name:</h3>
+						<p id="new-medicine-name"></p>
+					</li>
 					<li><h3 class="inline-search">Dosage:</h3>
-					<input type="number"  class="inline-search"></li>
+					<input type="number" id="new-medicine-dosage" class="inline-search"></li>
 					<li><h3 class="inline-search">Units:</h3>
-					<select>
-						<option value="" selected="selected"></option>
-						<option value="0">ml</option>
+					<select name="new-medicine-unit" id="new-medicine-unit">
+
+						<option value="0" selected="selected">ml</option>
 						<option value="1">mg</option>
 					</select></li>
 				</ul>
 				<a class="button special" onclick="searchMedicine.addMedicine()">Done</a>
+				<a class="button special" onclick="javascript:location.href='#add_appointment_form'">Cancel</a>
 			</div>
 		</div>
 	</div>
 
+	<!-- Add prescription modal -->
+	<div id="add_prescription_pop" class="overlay light">
+		<a class="cancel" href="#"></a>
+		<div class="popup">
+			<h3>Add prescription</h3>
+			<div class="content">
+				<ul class="actions">
+					<li>
+						<h3>Name:</h3>
+						<p id="new-prescription-name"></p>
+					</li>
+					<li>
+						<h3 class="inline-search">Dosage:</h3>
+						<input type="number" id="new-prescription-dosage" class="inline-search">
+					</li>
+					<li>
+						<h3 class="inline-search">Units:</h3>
+						<select name="new-prescription-unit" id="new-prescription-unit">
+							<option selected="selected" value="0">ml</option>
+							<option value="1">mg</option>
+						</select>
+					</li>
+					<li>
+						<h3 class="inline-search">Daily Frequency:</h3>
+						<input type="number" id="new-prescription-frequency" class="inline-search">
+					</li>
+				</ul>
+				<a class="button special" onclick="searchPrescription.addPrescription()">Done</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- Add recommendation modal -->
+	<div id="add_recommendation_pop" class="overlay light">
+		<a class="cancel" href="#"></a>
+		<div class="popup">
+			<h3>Add recommendation</h3>
+			<div class="content">
+				<ul class="actions">
+					<li>
+						<h3>Name:</h3>
+						<p id="new-recommendation-name"></p>
+					</li>
+					<li>
+						<h3 class="inline-search">Daily Frequency:</h3>
+						<input type="number" id="new-recommendation-frequency" class="inline-search">
+					</li>
+				</ul>
+				<a class="button special" onclick="searchRecommendation.addRecommendation()">Done</a>
+				<a class="button special" onclick="javascript:location.href='#add_appointment_form'">Cancel</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- Add diagnosis modal -->
+	<div id="add_diagnosis_pop" class="overlay light">
+		<a class="cancel" href="#"></a>
+		<div class="popup">
+			<h3>Add diagnosis</h3>
+			<div class="content">
+				<ul class="actions">
+					<li>
+						<h3>Name:</h3>
+						<p id="new-diagnosis-name"></p>
+					</li>
+					<li><h3 class="inline-search">Severity:</h3>
+						<select name="new-diagnosis-severity" id="new-diagnosis-severity">
+							<option selected="selected" value="0">LOW</option>
+							<option value="50">MED</option>
+							<option value="100">HIGH</option>
+						</select></li>
+				</ul>
+				<a class="button special" onclick="searchDiagnosis.addDiagnosis()">Done</a>
+				<a class="button special" onclick="javascript:location.href='#add_appointment_form'">Cancel</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- apply important_procedure modal -->
+	<div id="apply_important_procedure_pop" class="overlay light">
+		<div class="popup">
+			<h3>Add diagnosis</h3>
+			<div class="content">
+				<ul class="actions">
+					<li>
+						<h3>Name:</h3>
+						<!--<p id="important_procedure_name"></p>-->
+						<input type="text" id="important_procedure_name" class="">
+					</li>
+					<li>
+						<h3 class="">Batch number:</h3>
+						<input type="text" id="apply_important_procedure_batch_id" class="">
+					</li>
+				</ul>
+				<a class="button special" onclick="importantProcedureInfo.applyProcedure()">Done</a>
+				<a class="button special" onclick="javascript:location.href='#'">Cancel</a>
+			</div>
+		</div>
+	</div>
 
 	<img id="image" >
 	<div  id="divon" class="hide-all" style="size: 21cm 29.7cm;margin: 30mm 45mm 30mm 45mm;padding: 0mm 45mm 0mm 0mm;background-color: #ffffff;"></div>

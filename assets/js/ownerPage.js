@@ -128,7 +128,7 @@ var addPet = {
                     rangelength: [9, 9]
                 },
                 chipNum: {
-                    rangelength: [15, 15]
+                    rangelength: [10, 15]
                 }
             }
         });
