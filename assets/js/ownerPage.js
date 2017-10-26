@@ -22,7 +22,7 @@ var ownerInfo = {
     },
 
     showOwner: function (owner) {
-        $('#owner_details').html("Name: " + owner.FirstName + " " + owner.LastName+"<br>Phone Number: " + owner.PhoneNumber+"<br>Address: "+ owner.Address+" "+owner.City+ "<br><br><br><br><br>");
+        $('#owner_details').html("Name: " + owner.FirstName + " " + owner.LastName+"<br>Phone Number: " + owner.PhoneNumber+"<br>Address: "+ owner.Address+" "+owner.City+ "<br>ID: "+ owner.IdNumber+"<br><br><br><br><br>");
     }
 }
 

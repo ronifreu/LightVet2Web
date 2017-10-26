@@ -119,23 +119,23 @@
 						<div class="field">
 							<div class="vertical-list-item">Parameters check:</div>
 							<div class="6u 12u$(small) vertical-list-item">
-								<input type="checkbox" id="heart-lungs" name="Heart Lungs">
+								<input type="checkbox" id="heart-lungs" name="Heart Lungs" checked>
 								<label for="heart-lungs">Heart Lungs</label>
 							</div>
 							<div class="6u 12u$(small) vertical-list-item">
-								<input type="checkbox" id="body-temp" name="Body Temperature">
+								<input type="checkbox" id="body-temp" name="Body Temperature" checked>
 								<label for="body-temp">Body Temperature</label>
 							</div>
-							<div class="6u 12u$(small) vertical-list-item">
-								<input type="checkbox" id="ears" name="Ears">
+							<div class="6u 12u$(small) vertical-list-item" >
+								<input type="checkbox" id="ears" name="Ears" checked>
 								<label for="ears">Ears</label>
 							</div>
-							<div class="6u 12u$(small) vertical-list-item">
-								<input type="checkbox" id="eyes" name="Eyes">
+							<div class="6u 12u$(small) vertical-list-item" >
+								<input type="checkbox" id="eyes" name="Eyes" checked>
 								<label for="eyes">Eyes</label>
 							</div>
-							<div class="6u 12u$(small) vertical-list-item">
-								<input type="checkbox" id="mouth" name="Mouth">
+							<div class="6u 12u$(small) vertical-list-item" >
+								<input type="checkbox" id="mouth" name="Mouth" checked>
 								<label for="mouth">Mouth</label>
 							</div>
 						</div>
@@ -181,7 +181,7 @@
 							</ul>
 						</div>
 						<ul class="actions">
-							<li><input type="submit" value="Add" class="special"/></li>
+							<li><input type="submit" value="Done - > Add Appointment!" class="special"/></li>
 						</ul>
 					</form>
 				</section>
@@ -220,7 +220,7 @@
 						<p id="new-medicine-name"></p>
 					</li>
 					<li><h3 class="inline-search">Dosage:</h3>
-					<input type="number" id="new-medicine-dosage" class="inline-search"></li>
+					<input type="number" id="new-medicine-dosage" class="inline-search" value="100"></li>
 					<li><h3 class="inline-search">Units:</h3>
 					<select name="new-medicine-unit" id="new-medicine-unit">
 
@@ -247,7 +247,7 @@
 					</li>
 					<li>
 						<h3 class="inline-search">Dosage:</h3>
-						<input type="number" id="new-prescription-dosage" class="inline-search">
+						<input type="number" id="new-prescription-dosage" class="inline-search" value="100">
 					</li>
 					<li>
 						<h3 class="inline-search">Units:</h3>
@@ -258,10 +258,11 @@
 					</li>
 					<li>
 						<h3 class="inline-search">Daily Frequency:</h3>
-						<input type="number" id="new-prescription-frequency" class="inline-search">
+						<input type="number" id="new-prescription-frequency" class="inline-search" value="2">
 					</li>
 				</ul>
 				<a class="button special" onclick="searchPrescription.addPrescription()">Done</a>
+				<a class="button special" onclick="javascript:location.href='#add_appointment_form'">Cancel</a>
 			</div>
 		</div>
 	</div>
@@ -279,7 +280,7 @@
 					</li>
 					<li>
 						<h3 class="inline-search">Daily Frequency:</h3>
-						<input type="number" id="new-recommendation-frequency" class="inline-search">
+						<input type="number" id="new-recommendation-frequency" class="inline-search" value="2">
 					</li>
 				</ul>
 				<a class="button special" onclick="searchRecommendation.addRecommendation()">Done</a>
@@ -315,7 +316,7 @@
 	<!-- apply important_procedure modal -->
 	<div id="apply_important_procedure_pop" class="overlay light">
 		<div class="popup">
-			<h3>Add diagnosis</h3>
+			<h3>Add Procedure</h3>
 			<div class="content">
 				<ul class="actions">
 					<li>
@@ -326,6 +327,13 @@
 					<li>
 						<h3 class="">Batch number:</h3>
 						<input type="text" id="apply_important_procedure_batch_id" class="">
+					</li>
+					<li>
+						<div class="vertical-list-item">Procedure Date:</div>
+
+						<div class="4u 12u$(small) vertical-list-item">
+							<input type="date" id="procedureDate" name="procedureDate">
+						</div>
 					</li>
 				</ul>
 				<a class="button special" onclick="importantProcedureInfo.applyProcedure()">Done</a>

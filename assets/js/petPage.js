@@ -24,6 +24,7 @@ $(document).ready(function() {
     searchDiagnosis.init();
     importantProcedureInfo.init();
     document.getElementById("appointmentDate").valueAsDate  = new Date();
+    document.getElementById("procedureDate").valueAsDate  = new Date();
 
     $(document).ready(function() {
         $(window).keydown(function(event){
@@ -90,13 +91,13 @@ var appointmentInfo = {
         var template = '<tr class="appointment_row">'+
             '<td class="">{{appointmentType}}</td>'+
             '<td class="textDir textDirRtl">{{appointmentTitle}}</td>'+
-            '<td class="textDir textDirRtl">{{timeCreated}}</td>'+
+            '<td class="textDir textDirRtl">{{actualDate}}</td>'+
             '</tr>'+
             '<tr style="display: none" class="textDir textDirRtl"><td colspan="3">{{appointmentSummery}}</td></tr>';
 
 
         appointments.forEach(function(el){
-            rendered = rendered + Mustache.render(template, {identifier : el.Identifier,appointmentTitle : el.AppointmentTitle,appointmentSummery : el.AppointmentSummery,timeCreated : stringFormater.dateStringToNiceStringWithTime(el.TimeCreated),appointmentType : enumConverter.appointmentType.fromNumToStr(el.Type)});
+            rendered = rendered + Mustache.render(template, {identifier : el.Identifier,appointmentTitle : el.AppointmentTitle,appointmentSummery : el.AppointmentSummery,actualDate : stringFormater.dateStringToNiceString(el.ActualDate),appointmentType : enumConverter.appointmentType.fromNumToStr(el.Type)});
         });
         $('#appointments_list_block').html(rendered);
         this.appointmentListBehavior();
@@ -143,7 +144,7 @@ var importantProcedureInfo = {
             MedicalIdentifierType : 0,
             MedicalIdentifier : $('#new-medicine-unit').val(),
             ImportantProcedureType : 0,
-            "ActualDate" : $('#appointmentDate').val()
+            ActualDate : $('#procedureDate').val()
         }
         importantProceduresDict[$('#important_procedure_name').val()] = {
             Name : $('#important_procedure_name').val()
@@ -166,12 +167,23 @@ var importantProcedureInfo = {
         console.log("showImportantProcedures call");
         console.log(importantProceduresDict);
         var rendered = "";
-        var template = '<div class="important_procedure_item {{classType}}">{{Name}}</div>';
-        for (var key in importantProceduresTemplatesDict){
-            class_type = key in importantProceduresDict ? "good" : "bad";
-            class_type = key in chosenImportantProceduresDict ? "edited" : class_type;
-            rendered = rendered + Mustache.render(template, {Name : importantProceduresTemplatesDict[key].Name,classType : class_type});
-        }
+        var template = '<div class="important_procedure_item tooltip {{classType}}" data-name="{{Name}}">{{Name}}<span class="tooltiptext">{{Date}}</span></div>';
+        var sortedImportantProcedureArr = Object.keys(importantProceduresTemplatesDict).sort();
+        sortedImportantProcedureArr.forEach(function (el) {
+                class_type = el in importantProceduresDict ? "good" : "bad";
+                class_type = el in chosenImportantProceduresDict ? "edited" : class_type;
+                procedure_date = importantProceduresDict[el] ? stringFormater.dateStringToNiceString(importantProceduresDict[el].ActualDate) : "No last date found";
+                console.log(el);
+                rendered = rendered + Mustache.render(template, {Name : importantProceduresTemplatesDict[el].Name,classType : class_type,Date : procedure_date});
+        });
+
+        // for (var key in importantProceduresTemplatesDict){
+        //     class_type = key in importantProceduresDict ? "good" : "bad";
+        //     class_type = key in chosenImportantProceduresDict ? "edited" : class_type;
+        //     procedure_date = importantProceduresDict[key] ? stringFormater.dateStringToNiceString(importantProceduresDict[key].ActualDate) : "No last date found";
+        //     console.log(key);
+        //     rendered = rendered + Mustache.render(template, {Name : importantProceduresTemplatesDict[key].Name,classType : class_type,Date : procedure_date});
+        // }
 
         $('#important_procedures_block').html(rendered);
         this.importantProcedureItemBehavior();
@@ -180,7 +192,7 @@ var importantProcedureInfo = {
     importantProcedureItemBehavior : function () {
         $('.important_procedure_item').on('click', function () {
             location.href = '#apply_important_procedure_pop';
-            $('#important_procedure_name').val($(this).html());
+            $('#important_procedure_name').val($(this).data("name"));
         })
     }
 }
@@ -235,6 +247,7 @@ var addAppointment = {
                     $('#add_appointment_form').get(0).reset();
                     document.getElementById("appointmentDate").valueAsDate  = new Date();
                     alert("Appointment  added");
+                    document.location.href = 'index.html';
                 },
                 error: function (request, errorType, errorMessage) {
                     console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" + request.responseText);
@@ -242,6 +255,7 @@ var addAppointment = {
                 }
             })
         }
+
     },
 
 
