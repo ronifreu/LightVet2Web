@@ -69,7 +69,7 @@
 					<table class="alt">
 						<thead>
 						<tr>
-							<th>Type</th>
+							<th>Procedures Performed</th>
 							<th>Title</th>
 							<th>Date</th>
 
@@ -104,18 +104,18 @@
 								<input type="date" id="appointmentDate" name="appointmentDate">
 							</div>
 						</div>
-						<div class="field">
-							<div class="vertical-list-item">Appointment Type:</div>
+						<!--<div class="field">-->
+							<!--<div class="vertical-list-item">Appointment Type:</div>-->
 
-							<div class="4u 12u$(small) vertical-list-item">
-								<input type="radio" id="appointmentTypePeriodic" name="appointmentType" data-val="1" checked>
-								<label for="appointmentTypePeriodic">Periodic</label>
-							</div>
-							<div class="4u 12u$(small) vertical-list-item">
-								<input type="radio" id="appointmentTypeIncident" name="appointmentType" data-val="2">
-								<label for="appointmentTypeIncident">Incident</label>
-							</div>
-						</div>
+							<!--<div class="4u 12u$(small) vertical-list-item">-->
+								<!--<input type="radio" id="appointmentTypePeriodic" name="appointmentType" data-val="1" checked>-->
+								<!--<label for="appointmentTypePeriodic">Periodic</label>-->
+							<!--</div>-->
+							<!--<div class="4u 12u$(small) vertical-list-item">-->
+								<!--<input type="radio" id="appointmentTypeIncident" name="appointmentType" data-val="2">-->
+								<!--<label for="appointmentTypeIncident">Incident</label>-->
+							<!--</div>-->
+						<!--</div>-->
 						<div class="field">
 							<div class="vertical-list-item">Parameters check:</div>
 							<div class="6u 12u$(small) vertical-list-item">
@@ -143,11 +143,11 @@
 
 						<div class="field">
 							<label class='form-label textDirRtl' for='appointmentTitle'>Appointment Title</label>
-							<input type="text" name="appointmentTitle" id="appointmentTitle" class="textDir textDirRtl" placeholder="לחץ כדי להכניס את כותרת הפגישה" />
+							<input type="text" name="appointmentTitle" id="appointmentTitle" class="textDir textDirRtl" value="פגישה ללא כותרת" placeholder="לחץ כדי להכניס כותרת פגישה"/>
 						</div>
 						<div class="field">
-							<label class='form-label textDirRtl' for='appointmentSummery'>Appointment Summery</label>
-							<textarea name="appointmentSummery" id="appointmentSummery" class="textDir textDirRtl" placeholder="לחץ כדי להכניס את סיכום הפגישה"></textarea>
+							<label class='form-label textDirRtl' for='appointmentSummery'>Appointment Free Text</label>
+							<input type="text" name="appointmentSummery" id="appointmentSummery" class="textDir textDirRtl" value="פגישה ללא הוספת מלל חופשי" placeholder="לחץ כדי להכניס מלל חופשי בנושא הפגישה" ></input>
 						</div>
 						<div class="field">
 							<h3 class="inline-search">Diagnosis given:</h3>

@@ -1765,3 +1765,19 @@ section.single > div:first-of-type {
 	opacity: 1;
 
 }
+
+#appointments_list_block h3, #appointments_list_block ul {
+	margin: 0px;
+}
+
+#appointments_list_block span {
+	margin: 10px;
+}
+
+.false {
+	background-color: plum;
+}
+
+.true {
+	background-color: #7bd0c1;
+}

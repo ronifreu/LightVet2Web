@@ -87,17 +87,67 @@ var appointmentInfo = {
         })
     },
     showAppointments: function (appointments) {
+
+        var templateImportantProc = ' {{importantProcName}} |';
+
+
+        var dateTemplate = '<h3>Date:</h3><div class="textDirRtl">{{actualDate}}</div>';
+        var titleTemplate = '<h3>Title:</h3><div class="textDirRtl">{{title}}</div>';
+        var summeryTemplate = '<h3>Free Text:</h3><div class="textDirRtl">{{title}}</div>';
+        var parametersTemplate = '<h3>Parameters Check:</h3><div><span class="{{bodyTemp}}">Body Temperature</span><span class="{{ears}}">Ears</span><span class="{{eyes}}">Eyes</span><span class="{{mouth}}">Mouth</span><span class="{{heartAndLungs}}">Heart & Lungs</span></div>';
+        var diagnosisTemplate = '<h3>Diagnosis Given:</h3>'+
+                                   ' <ul>{{#diagnosisList}}' +
+                                '<li >{{Name}}</li>' +
+                                "{{/diagnosisList}}</ul>";
+        var medicinesTemplate = '<h3>Medicines Given:</h3>'+
+                                " <ul>{{#medicinesList}}" +
+                                '<li>{{Name}}  {{Dosage}}  {{MesurmentUnit}}</li>' +
+                                "{{/medicinesList}}</ul>";
+        var prescriptionsTemplate = '<h3>Prescriptions Given:</h3>'+
+                                " <ul>{{#prescriptionsList}}" +
+                                '<li>{{Name}}  {{Dosage}}  {{MesurmentUnit}}</li>' +
+                                "{{/prescriptionsList}}</ul>";
+        var recommendationsTemplate = '<h3>Recommendations Given:</h3>'+
+                                " <ul>{{#recommendationsList}}" +
+                                '<li>{{Name}}</li>' +
+                                "{{/recommendationsList}}</ul>";
+
+
+        var appointmentTemplate = dateTemplate + titleTemplate + summeryTemplate + parametersTemplate + diagnosisTemplate + medicinesTemplate + prescriptionsTemplate + recommendationsTemplate
+
         var rendered = "";
         var template = '<tr class="appointment_row">'+
-            '<td class="">{{appointmentType}}</td>'+
-            '<td class="textDir textDirRtl">{{appointmentTitle}}</td>'+
+            '<td>{{appointmentProcedures}}</td>'+
+            // '<td><div>Boya</div><div>lola</div></td>'+
+            '<td class="textDir textDirRtl">{{summery}}</td>'+
             '<td class="textDir textDirRtl">{{actualDate}}</td>'+
             '</tr>'+
-            '<tr style="display: none" class="textDir textDirRtl"><td colspan="3">{{appointmentSummery}}</td></tr>';
+            '<tr style="display: none" class="textDir"><td colspan="3">'+appointmentTemplate+'</td></tr>';
 
 
         appointments.forEach(function(el){
-            rendered = rendered + Mustache.render(template, {identifier : el.Identifier,appointmentTitle : el.AppointmentTitle,appointmentSummery : el.AppointmentSummery,actualDate : stringFormater.dateStringToNiceString(el.ActualDate),appointmentType : enumConverter.appointmentType.fromNumToStr(el.Type)});
+            var renderedImportantProc = "";
+            JSON.parse(el.ImportantProceduresAsJson).forEach(function(importantProcItem){
+                renderedImportantProc = renderedImportantProc + Mustache.render(templateImportantProc, {importantProcName : importantProcItem.Name});
+            });
+
+            var prescriptionsList = [];
+            var medicinesList = [];
+            var recommendationsList = [];
+            JSON.parse(el.MedicinesAsJson).forEach(function (med_item) {
+                med_item.MesurmentUnit = enumConverter.mesurmentUnit.fromNumToStr(med_item.MesurmentUnit)
+                if(med_item.TreatmentEntryType == 1)
+                    medicinesList.push(med_item);
+                if(med_item.TreatmentEntryType == 2)
+                    prescriptionsList.push(med_item);
+                if(med_item.TreatmentEntryType == 3)
+                    recommendationsList.push(med_item);
+            });
+            console.log("********************************");
+            console.log(recommendationsList);
+
+            rendered = rendered + Mustache.render(template, {diagnosisList:JSON.parse(el.DiagnosisAsJson),prescriptionsList:prescriptionsList,medicinesList:medicinesList,recommendationsList:recommendationsList,identifier : el.Identifier,title : el.AppointmentTitle,summery : el.AppointmentSummery,actualDate : stringFormater.dateStringToNiceString(el.ActualDate),appointmentProcedures : renderedImportantProc,eyes:el.IsEyesGood,ears:el.IsEarsGood,mouth:el.IsMouthGood,bodyTemp:el.IsBodyTempratureGood,heartAndLungs:el.IsHeartLungsGood});
+
         });
         $('#appointments_list_block').html(rendered);
         this.appointmentListBehavior();
@@ -231,7 +281,7 @@ var addAppointment = {
                     "PetIdentifier": localStorage.getItem('pet_id'),
                     "AppointmentTitle": $('#appointmentTitle').val(),
                     "AppointmentSummery": $('#appointmentSummery').val(),
-                    "Type": $('input[name="appointmentType"]:checked').data('val'),
+                    // "Type": $('input[name="appointmentType"]:checked').data('val'),
                     "MedicinesAsJson" : JSON.stringify(chosenMedicinesList),
                     "DiagnosisAsJson" : JSON.stringify(chosenDiagnosisList),
                     "ImportantProceduresAsJson" : JSON.stringify(chosenImportantProceduresList),
@@ -267,7 +317,7 @@ var addAppointment = {
                     required : true,
                 },
                 appointmentSummery:{
-                    required : true,
+                    required : false,
                 }
             }
         });
