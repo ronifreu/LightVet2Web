@@ -75,8 +75,12 @@ var createOwner = {
                     "City":  $('#city').val(),
                     "Mail":  $('#email').val()},
                 success: function (response) {
+                    $('#search_field').val($('#phoneNumber').val());
                     $('#create_owner_form').get(0).reset();
+
                     alert("Owner  added");
+
+
                     search.queryServer();
                 },
                 error: function(request, errorType, errorMessage) {

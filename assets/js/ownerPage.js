@@ -76,6 +76,9 @@ var addPet = {
         $('#pet-type').on('change',this.petSelect);
     },
     sendAddPetForm: function (event) {
+        if($('#chipNumGenerator').is(':checked')){
+            $('#chipNum').val("nc" + Date.now());
+        }
         event.preventDefault();
         if($(this).valid()){
             $.ajax(serverAddress+'/api/Pet/AddPet',{
@@ -101,10 +104,16 @@ var addPet = {
         }
     },
     petSelect: function (event) {
-        if($(this).val() == 1)
+        if($(this).val() == 1) {
             $('#chipNum').parent('div').removeClass('hide_chip_field');
-        else
+            $('#chipNumGenerator').parent('div').removeClass('hide_chip_field');
+        }
+        else {
             $('#chipNum').parent('div').addClass('hide_chip_field');
+            $('#chipNumGenerator').parent('div').addClass('hide_chip_field');
+            $('#chipNum').val("nc" + Date.now());
+            //console.log($('#chipNum').val());
+        }
     },
 
     initFormValidation : function () {

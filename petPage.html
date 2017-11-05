@@ -153,11 +153,17 @@
 							<h3 class="inline-search">Diagnosis given:</h3>
 							<input type="text" id="diagnosis_search" class="inline-search">
 							<ul class="actions small" id="diagnosis_template_list_search_block">
-								<li><a href="#" class="button special small medicine_template_button">זיהום חמור בפה</a></li>
+								<li><a href="#" class="button special small medicine_template_button">LOADING LIST</a></li>
 							</ul>
 						</div>
 						<div class="field">
-							<!--<a href="#chose_medicine_pop" class="button special small" onclick="">Add medicines</a>-->
+							<h3 class="inline-search">Actions taken:</h3>
+							<input type="text" id="action_taken_search" class="inline-search">
+							<ul class="actions small" id="action_taken_list_search_block">
+								<li><a href="#" class="button special small medicine_template_button">LOADING LIST</a></li>
+							</ul>
+						</div>
+						<div class="field">
 							<h3 class="inline-search">Medicines given:</h3>
 							<input type="text" id="medicine_name_search" class="inline-search">
 							<ul class="actions small" id="medicine_template_list_chosen_block">
@@ -168,16 +174,14 @@
 							<h3 class="inline-search">Prescriptions given:</h3>
 							<input type="text" id="prescription_search" class="inline-search">
 							<ul class="actions small" id="prescription_template_list_chosen_block">
-								<li><a href="#" class="button special small medicine_template_button">Pinitzilin 200 ML</a></li>
-								<li><a href="#" class="button special small medicine_template_button">Ogmentin 100 ML</a></li>
+								<li><a href="#" class="button special small medicine_template_button">LOADING LIST</a></li>
 							</ul>
 						</div>
 						<div class="field">
 							<h3 class="inline-search">Recommendations given:</h3>
 							<input type="text" id="recommendation_search" class="inline-search">
 							<ul class="actions small" id="recommendations_list_search_block">
-								<li><a href="#" class="button special small medicine_template_button">צום של 24 שעות ולאחר מכן אוכל יבש בלבד</a></li>
-								<li><a href="#" class="button special small medicine_template_button">לא לצאת לרוץ בשעות החום</a></li>
+								<li><a href="#" class="button special small medicine_template_button">LOADING LIST</a></li>
 							</ul>
 						</div>
 						<ul class="actions">
@@ -284,6 +288,24 @@
 					</li>
 				</ul>
 				<a class="button special" onclick="searchRecommendation.addRecommendation()">Done</a>
+				<a class="button special" onclick="javascript:location.href='#add_appointment_form'">Cancel</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- Add recommendation modal -->
+	<div id="add_action_taken_pop" class="overlay light">
+		<a class="cancel" href="#"></a>
+		<div class="popup">
+			<h3>Add action taken</h3>
+			<div class="content">
+				<ul class="actions">
+					<li>
+						<h3>Name:</h3>
+						<p id="new-action-taken-name"></p>
+					</li>
+				</ul>
+				<a class="button special" onclick="searchActionTaken.addActionTaken()">Done</a>
 				<a class="button special" onclick="javascript:location.href='#add_appointment_form'">Cancel</a>
 			</div>
 		</div>

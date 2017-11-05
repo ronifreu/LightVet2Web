@@ -11,6 +11,8 @@ var chosenDiagnosisDict = {}
 var importantProceduresTemplatesDict = {}
 var importantProceduresDict = {}
 var chosenImportantProceduresDict = {}
+var ActionTakenResposneDict = {}
+var chosenActionTakenDict = {}
 
 $(document).ready(function() {
     petInfo.init();
@@ -22,6 +24,7 @@ $(document).ready(function() {
     searchPrescription.init();
     searchRecommendation.init();
     searchDiagnosis.init();
+    searchActionTaken.init()
     importantProcedureInfo.init();
     document.getElementById("appointmentDate").valueAsDate  = new Date();
     document.getElementById("procedureDate").valueAsDate  = new Date();
@@ -42,6 +45,10 @@ $(document).ready(function() {
                 if(event.target.id == "recommendation_search"){
                     location.href = '#add_recommendation_pop';
                     $('#new-recommendation-name').html($('#recommendation_search').val());
+                }
+                if(event.target.id == "action_taken_search"){
+                    location.href = '#add_action_taken_pop';
+                    $('#new-action-taken-name').html($('#action_taken_search').val());
                 }
                 if(event.target.id == "diagnosis_search"){
                     location.href = '#add_diagnosis_pop';
@@ -93,7 +100,7 @@ var appointmentInfo = {
 
         var dateTemplate = '<h3>Date:</h3><div class="textDirRtl">{{actualDate}}</div>';
         var titleTemplate = '<h3>Title:</h3><div class="textDirRtl">{{title}}</div>';
-        var summeryTemplate = '<h3>Free Text:</h3><div class="textDirRtl">{{title}}</div>';
+        var summeryTemplate = '<h3>Free Text:</h3><div class="textDirRtl">{{summery}}</div>';
         var parametersTemplate = '<h3>Parameters Check:</h3><div><span class="{{bodyTemp}}">Body Temperature</span><span class="{{ears}}">Ears</span><span class="{{eyes}}">Eyes</span><span class="{{mouth}}">Mouth</span><span class="{{heartAndLungs}}">Heart & Lungs</span></div>';
         var diagnosisTemplate = '<h3>Diagnosis Given:</h3>'+
                                    ' <ul>{{#diagnosisList}}' +
@@ -111,15 +118,19 @@ var appointmentInfo = {
                                 " <ul>{{#recommendationsList}}" +
                                 '<li>{{Name}}</li>' +
                                 "{{/recommendationsList}}</ul>";
+        var proceduresTemplate = '<h3>Procedures:</h3>'+
+                                " <ul>{{#proceduresList}}" +
+                                '<li>{{Name}}</li>' +
+                                "{{/proceduresList}}</ul>";
 
 
-        var appointmentTemplate = dateTemplate + titleTemplate + summeryTemplate + parametersTemplate + diagnosisTemplate + medicinesTemplate + prescriptionsTemplate + recommendationsTemplate
+        var appointmentTemplate = dateTemplate + titleTemplate + summeryTemplate + parametersTemplate + diagnosisTemplate + medicinesTemplate + prescriptionsTemplate + recommendationsTemplate + proceduresTemplate
 
         var rendered = "";
         var template = '<tr class="appointment_row">'+
             '<td>{{appointmentProcedures}}</td>'+
             // '<td><div>Boya</div><div>lola</div></td>'+
-            '<td class="textDir textDirRtl">{{summery}}</td>'+
+            '<td class="textDir textDirRtl">{{title}}</td>'+
             '<td class="textDir textDirRtl">{{actualDate}}</td>'+
             '</tr>'+
             '<tr style="display: none" class="textDir"><td colspan="3">'+appointmentTemplate+'</td></tr>';
@@ -146,7 +157,7 @@ var appointmentInfo = {
             console.log("********************************");
             console.log(recommendationsList);
 
-            rendered = rendered + Mustache.render(template, {diagnosisList:JSON.parse(el.DiagnosisAsJson),prescriptionsList:prescriptionsList,medicinesList:medicinesList,recommendationsList:recommendationsList,identifier : el.Identifier,title : el.AppointmentTitle,summery : el.AppointmentSummery,actualDate : stringFormater.dateStringToNiceString(el.ActualDate),appointmentProcedures : renderedImportantProc,eyes:el.IsEyesGood,ears:el.IsEarsGood,mouth:el.IsMouthGood,bodyTemp:el.IsBodyTempratureGood,heartAndLungs:el.IsHeartLungsGood});
+            rendered = rendered + Mustache.render(template, {proceduresList:JSON.parse(el.ImportantProceduresAsJson), diagnosisList:JSON.parse(el.DiagnosisAsJson),prescriptionsList:prescriptionsList,medicinesList:medicinesList,recommendationsList:recommendationsList,identifier : el.Identifier,title : el.AppointmentTitle,summery : el.AppointmentSummery,actualDate : stringFormater.dateStringToNiceString(el.ActualDate),appointmentProcedures : renderedImportantProc,eyes:el.IsEyesGood,ears:el.IsEarsGood,mouth:el.IsMouthGood,bodyTemp:el.IsBodyTempratureGood,heartAndLungs:el.IsHeartLungsGood});
 
         });
         $('#appointments_list_block').html(rendered);
@@ -201,7 +212,7 @@ var importantProcedureInfo = {
         }
         importantProcedureInfo.showImportantProcedures();
         location.href = '#';
-        alert("Procedure "+ $('#important_procedure_name').val() +" successfully registrated for this appointment");
+        //alert("Procedure "+ $('#important_procedure_name').val() +" successfully registrated for this appointment");
     },
     saveImportantProcedureTemplates: function (appointments) {
         appointments.forEach(function(el){
@@ -262,6 +273,10 @@ var addAppointment = {
 
         chosenMedicinesList = $.merge(Object.keys(chosenRecommendationDict).map(function(key){
             return chosenRecommendationDict[key];
+        }),chosenMedicinesList);
+
+        chosenMedicinesList = $.merge(Object.keys(chosenActionTakenDict).map(function(key){
+            return chosenActionTakenDict[key];
         }),chosenMedicinesList);
 
         var chosenDiagnosisList = Object.keys(chosenDiagnosisDict).map(function(key){
@@ -573,6 +588,79 @@ var searchPrescription =  {
             else {
                 var selectedId = $(this).data("medicine_template_identifier")
                 chosenPrescriptionDict[selectedId] = PrescriptionResposneDict[selectedId];
+            }
+        })
+    }
+}
+
+var searchActionTaken =  {
+    init: function () {
+        $('#action_taken_search').on('keyup', this.queryServer);
+        this.queryServer();
+    },
+    queryServer: function () {
+        console.log("searchActionTaken queryServer call");
+        $.ajax(serverAddress+'/api/Appointment/GetMedicineTemplateByStartWithName',{
+            data: {"medicineName": $('#action_taken_search').val(),
+                "TreatmentEntryType" : 4},
+
+            success: function (response) {
+                ActionTakenResposneDict = {}
+                response.forEach(function(el){
+                    ActionTakenResposneDict[el.Identifier] = el
+                });
+                searchActionTaken.showSearchRes(response)
+            },
+            error: function(request, errorType, errorMessage) {
+                console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
+                alert(request.responseText)
+            }
+        })
+    },
+    addActionTaken: function () {
+        var uuid = "guid" + new Date().getTime();
+        chosenActionTakenDict[uuid] = {
+            Identifier : uuid,
+            Name : $('#action_taken_search').val(),
+            DailyFrequency : $('#new-recommendation-frequency').val(),
+            TreatmentEntryType : 4
+        }
+        searchActionTaken.showSearchRes();
+        location.href = '#add_appointment_form';
+    },
+    showSearchRes : function (response) {
+        console.log("addActionTaken showSearchRes call");
+        var rendered = "";
+        var template = '<li><a href="#" class="button {{classType}} small recommendation_template_button" data-medicine_template_identifier="{{identifier}}">{{medicineName}}</a></li>';
+        console.log(chosenActionTakenDict)
+        for (var key in chosenActionTakenDict){
+            rendered = rendered + Mustache.render(template, {classType : "special",medicineName : chosenActionTakenDict[key].Name,identifier : key});
+        }
+
+        if(response) {
+            response.forEach(function (el) {
+                if (!(el.Identifier in chosenActionTakenDict)) {
+                    rendered = rendered + Mustache.render(template, {
+                            classType: "",
+                            medicineName: el.Name,
+                            dosage: el.Dosage,
+                            mesurmentUnit: enumConverter.mesurmentUnit.fromNumToStr(el.MesurmentUnit),
+                            identifier: el.Identifier
+                        });
+                }
+            });
+        }
+        $('#action_taken_list_search_block').html(rendered);
+        $(".action_taken_template_button").on('click',function (event) {
+            event.preventDefault();
+
+            $(this).toggleClass("special");
+            if($(this).data("medicine_template_identifier") in chosenActionTakenDict) {
+                delete chosenActionTakenDict[$(this).data("medicine_template_identifier")]
+            }
+            else {
+                var selectedId = $(this).data("medicine_template_identifier")
+                chosenActionTakenDict[selectedId] = ActionTakenResposneDict[selectedId];
             }
         })
     }
