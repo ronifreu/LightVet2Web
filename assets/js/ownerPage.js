@@ -98,7 +98,7 @@ var addPet = {
                 },
                 error: function(request, errorType, errorMessage) {
                     console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
-                    alert(request.responseText);
+                    alert(request.responseJSON.Message);
                 }
             })
         }

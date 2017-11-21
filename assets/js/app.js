@@ -21,7 +21,8 @@ var search =  {
             data: {"Phone": $('#cb_phone_number').is(':checked') ? $('#search_field').val() : "",
                 "FirstName": $('#cb_first_name').is(':checked') ? $('#search_field').val() : "",
                 "LastName": $('#cb_last_name').is(':checked') ? $('#search_field').val() : "",
-                "Chip": $('#cb_chip').is(':checked') ? $('#search_field').val() : ""},
+                "Chip": $('#cb_chip').is(':checked') ? $('#search_field').val() : "",
+                "IdNumber": $('#cb_id_number').is(':checked') ? $('#search_field').val() : ""},
             success: search.showSearchRes,
             error: function(request, errorType, errorMessage) {
                 console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
@@ -85,7 +86,7 @@ var createOwner = {
                 },
                 error: function(request, errorType, errorMessage) {
                     console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
-                    alert(request.responseText);
+                    alert(request.responseJSON.Message);
                 }
             })
         }

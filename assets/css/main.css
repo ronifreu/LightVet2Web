@@ -1709,7 +1709,7 @@ section.single > div:first-of-type {
 	position: absolute;
 }
 
-.medicine_template_button, .prescription_template_button, .recommendation_template_button, .diagnosis_template_button {
+.medicine_template_button, .prescription_template_button, .recommendation_template_button, .diagnosis_template_button, .action_taken_template_button {
 	font: 20px Arial;
 	line-height: 300%;
 	letter-spacing: 1px !important;

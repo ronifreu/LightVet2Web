@@ -221,7 +221,13 @@ var importantProcedureInfo = {
     },
     saveImportantProcedures: function (appointments) {
         appointments.forEach(function(el){
-            importantProceduresDict[el.Name]=el;
+            if(el.Name in importantProceduresDict) {
+                if ((new Date(el.actualDate)) > (new Date(importantProceduresDict[el.Name].actualDate)))
+                    importantProceduresDict[el.Name] = el;
+            }
+            else {
+                importantProceduresDict[el.Name] = el;
+            }
         });
     },
     showImportantProcedures : function () {
@@ -312,7 +318,7 @@ var addAppointment = {
                     $('#add_appointment_form').get(0).reset();
                     document.getElementById("appointmentDate").valueAsDate  = new Date();
                     alert("Appointment  added");
-                    document.location.href = 'index.html';
+                    document.location.href = 'ownerPage.html';
                 },
                 error: function (request, errorType, errorMessage) {
                     console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" + request.responseText);
@@ -631,7 +637,7 @@ var searchActionTaken =  {
     showSearchRes : function (response) {
         console.log("addActionTaken showSearchRes call");
         var rendered = "";
-        var template = '<li><a href="#" class="button {{classType}} small recommendation_template_button" data-medicine_template_identifier="{{identifier}}">{{medicineName}}</a></li>';
+        var template = '<li><a href="#" class="button {{classType}} small action_taken_template_button" data-medicine_template_identifier="{{identifier}}">{{medicineName}}</a></li>';
         console.log(chosenActionTakenDict)
         for (var key in chosenActionTakenDict){
             rendered = rendered + Mustache.render(template, {classType : "special",medicineName : chosenActionTakenDict[key].Name,identifier : key});
