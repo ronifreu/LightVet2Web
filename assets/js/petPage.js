@@ -76,7 +76,12 @@ var petInfo = {
     },
 
     showPet: function (pet) {
-        $('#pet_details').html("Name: " + pet.Name + "<br>Color: " + pet.Color + "<br>Breed:  " + pet.Breed+ "<br>Chip Number:  " + pet.ChipIdentifier+ "<br>BirthDate:  " +stringFormater.dateStringToNiceString(pet.DateOfBirth) +" (Age: "+stringFormater.dateStringToNiceAge(pet.DateOfBirth)+")<br>Castrated: "+pet.IsCastrated);
+        $('#pet_name').html(pet.Name);
+        $('#pet_color').html(pet.Color);
+        $('#pet_breed').html(pet.Breed);
+        $('#pet_chip_number').html(pet.ChipIdentifier);
+        $('#pet_birthdate').html(stringFormater.dateStringToNiceString(pet.DateOfBirth));
+        $('#pet_iscastrated').html(pet.IsCastrated);
     }
 }
 
@@ -812,5 +817,37 @@ var searchDiagnosis =  {
                 chosenDiagnosisDict[selectedId] = DiagnosisResposneDict[selectedId];
             }
         })
+    }
+}
+
+var editfields =  {
+    openModal : function(fieald_name){
+        console.log("editfields openModal call " + fieald_name);
+        localStorage.setItem('edited_field_name',fieald_name);
+        location.href = '#edit_field_pop';
+        $('#current_val').html(event.target.innerHTML);
+    },
+    sendUpdate: function () {
+        console.log("editfields sendUpdate call ");
+        this.editChosenPet(localStorage.getItem('edited_field_name'),$('#edited_new_val').val());
+        $.ajax(serverAddress+'/api/Pet/UpdatePet',{
+            type: 'POST',
+            data: JSON.parse(localStorage.getItem('chosen_pet')),
+
+            success: function (response) {
+                alert("Successfuly updated pet's " + localStorage.getItem('edited_field_name')+ " to " + $('#edited_new_val').val())
+                petInfo.init();
+                location.href = '#';
+            },
+            error: function(request, errorType, errorMessage) {
+                console.log('Error: ' + errorType + ' with message: ' + errorMessage + "Request:" +request.responseText);
+                alert(request.responseText)
+            }
+        })
+    },
+    editChosenPet : function (field_name,field_value) {
+        var current_chosen_pet = JSON.parse(localStorage.getItem('chosen_pet'));
+        current_chosen_pet[field_name] = field_value;
+        localStorage.setItem('chosen_pet',JSON.stringify(current_chosen_pet));
     }
 }

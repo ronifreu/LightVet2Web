@@ -55,10 +55,30 @@
 						<span class="image left">
 							<img src="images/dogSample.jpg" alt="" />
 						</span>
-					<h1 class="smalltitle" id="pet_details"></h1>
-					<div id="important_procedures_block">
-						<div class="important_procedure_item">LOADING IMPORTANT PROCEDURE FROM SERVER</div>
-					</div>
+						<div>
+							<div>
+								<h1 class="smalltitle">Name: </h1><h1 class="smalltitle" id="pet_name" onclick="editfields.openModal('Name')"></h1>
+							</div>
+							<div>
+								<h1 class="smalltitle">Color: </h1><h1 class="smalltitle" id="pet_color" onclick="editfields.openModal('Color')" ></h1>
+							</div>
+							<div>
+								<h1 class="smalltitle">Breed: </h1><h1 class="smalltitle" id="pet_breed" onclick="editfields.openModal('Breed')"></h1>
+							</div>
+							<div>
+								<h1 class="smalltitle">Chip Number: </h1><h1 class="smalltitle" id="pet_chip_number" onclick="editfields.openModal('ChipIdentifier')"></h1>
+							</div>
+							<div>
+								<h1 class="smalltitle">BirthDate: </h1><h1 class="smalltitle" id="pet_birthdate"></h1>
+							</div>
+							<div>
+								<h1 class="smalltitle">Castrated: </h1><h1 class="smalltitle" id="pet_iscastrated"></h1>
+							</div>
+
+						</div>
+						<div id="important_procedures_block">
+							<div class="important_procedure_item">LOADING IMPORTANT PROCEDURE FROM SERVER</div>
+						</div>
 					</p>
 				</div>
 				<ul class="actions">
@@ -293,7 +313,7 @@
 		</div>
 	</div>
 
-	<!-- Add recommendation modal -->
+	<!-- Add action taken modal -->
 	<div id="add_action_taken_pop" class="overlay light">
 		<a class="cancel" href="#"></a>
 		<div class="popup">
@@ -363,6 +383,30 @@
 			</div>
 		</div>
 	</div>
+
+	<!-- Add recommendation modal -->
+	<div id="edit_field_pop" class="overlay light">
+		<a class="cancel" href="#"></a>
+		<div class="popup">
+			<h3>Edit Field</h3>
+			<div class="content">
+				<ul class="actions">
+					<li>
+						<h3>Current value:</h3>
+						<p id="current_val"></p>
+					</li>
+					<li>
+						<h3 class="inline-search">New value:</h3>
+						<input type="text" id="edited_new_val" class="inline-search">
+					</li>
+				</ul>
+				<a class="button special" onclick="editfields.sendUpdate()">Done</a>
+				<a class="button special" onclick="javascript:location.href='#'">Cancel</a>
+			</div>
+		</div>
+	</div>
+
+
 
 	<img id="image" >
 	<div  id="divon" class="hide-all" style="size: 21cm 29.7cm;margin: 30mm 45mm 30mm 45mm;padding: 0mm 45mm 0mm 0mm;background-color: #ffffff;"></div>

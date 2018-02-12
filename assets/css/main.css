@@ -188,6 +188,11 @@
 
 	.smalltitle{
 		font-size: 1.50em;
+
+	}
+	h1.smalltitle{
+		margin: 0;
+		display: inline;
 	}
 
 		h1 a {
